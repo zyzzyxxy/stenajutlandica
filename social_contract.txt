@@ -4,6 +4,7 @@ Members
 * Johan Ericsson
 * Arvid Holmqvist
 * Eric Rylander, Rylle98@hotmail.se, 0730309383
+* Carl Seeman, carlse@student.chalmers.se, Git: Spikekotte
 
 
 Work
