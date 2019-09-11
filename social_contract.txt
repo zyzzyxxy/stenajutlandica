@@ -5,6 +5,7 @@ Members
 * Arvid Holmqvist
 * Eric Rylander, Rylle98@hotmail.se, 0730309383
 * Carl Seeman, carlse@student.chalmers.se, Git: Spikekotte
+* Daniel Danielsson, dandani@student.chalmers.se, Git: JanneD
 
 
 Work
