@@ -1,0 +1,44 @@
+Görbar
+     
+Team:        Stena Jutlandica
+Metod:     Agil utveckling 
+Tid:         8 veckor
+Budget:     0 :-
+Hämta reseinfo från Stena eller Realtimeferries, om sådan finns tillgänglig för oss, annars simulera data och gör program redo att funka för implementation av riktiga realtime hubben. Vi använder västtrafiks API för att få informationen om resor till stenas olika terminaler i Göteborg. Projektet ska kunna genomföras på kort tid och med liten till ingen budget. Resultatet ska sedan kunna demonstreas i open street map.
+Önskvärd
+
+Android, iOS och webbapplikation som kopplar ihop västtrafiks rese-api med Stena-Lines avgångar och visar resor från valfri VT station till valfri Stena start-terminal och slut-terminal (tyskland danmark).
+Använda oss av mgwt.
+Data konverterare som gör det möjligt att hämta och skicka data i olika format sömlöst, SIRI, GTFS, GTFS RT, JSON, XML.
+Färjetransport ska vara enkelt att utnyttja och en tydligare metod att se tidtabell ska underlätta.
+Kartsystem - super detaljerad.
+Använda oss av googles cloud platform om möjligt.
+Kartsystem - Google, openstreetmap, eller någon lösning som ger något
+
+Syfte och mål:
+En webbapplikation som kopplar ihop västtrafiks rese-api med Stena-Lines avgångar och visar resor från valfri VT station till valfri Stena start-terminal och slut-terminal (tyskland danmark)
+
+Kunna planera resan från position A till C med minimalt tänkande på punkt B. Där A är passagerarens position i Göteborg, B är färje-resan och C är slutterminalen för färjan. Till exempel Ada som sitter på bänken i brunnsparken och vill till Fredrikshamn och bada. Då ska hon med enkelt knapptryck få information om kommande färjeavgångar och hur hon ska ta kollektivtrafiken för att matcha färjeavgångar. Detta demonstreras med en realtids-tidtabell i en webbapplikation.
+
+Bakgrund: 
+Funktionalitet för reseplanering som inte finns i nuläget.
+
+
+
+
+Värde-Individ:
+Ska göra det lättare att planera resor med färjor utan att använda bil. Underlätt semesterplaneringen för turister som vill resa med färja. Öppnar upp för nya möten och kulturer genom att koppla ihop europa. 
+
+Värde-Samhälle:
+Bidrar till ökat utnyttjande som kan stimulera tillväxt i de städer trafiken går mellan. Tex med ökad turism och enklare att interagera med internationella kundkontakter. Kan bidra till minskad trafik då det blir lättare att använda kollektivtrafik. 
+
+
+Gångbar 
+
+Nyckeltal:
+42?
+Effekt:        
+Enklare att planera sina resor till danmark och tyskland. Möjliggör att åka kommunalt och skippa bilen.
+Värde-Mottagare:
+Ökar publicitet för aktörer.
+Ökar antal passagerare då det blir lättare att planera med färjor.
