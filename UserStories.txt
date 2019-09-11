@@ -1,0 +1,7 @@
+User Stories
+1. As a project owner I want a way to share my real time data since the information could be beneficial for my customers.
+2. As a project owner I want an easy way to get information from Västtrafik about arrivals to closests stops to terminals since it makes it easier for passengers to plan trips. 
+3. As a project owner I want a way to calculate the path to the terminal inorder to make it more convenient for my passengers to arrive at the terminal.
+4. As a project owner I want a map shown in the app that displays the path leading up to the terminal so that passengers can easily navigate to it, helps speed up boarding.
+5. As a project owner I want a web-application that can display transport-path information since that would make it easier for the passengers to plan their trips.
+6. I want to gather and display information on arrivals from västrafik api.
