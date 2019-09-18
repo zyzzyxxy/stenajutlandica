@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Vehicle>
+	<Ferries>
+		<Name>Jutlandica</Name>
+		<Destination>Fredrikshamn</Destination>
+		<DepartureHour>0</DepartureHour>
+		<DepartureMin>30</DepartureMin>
+		<ArrivalHour>4</ArrivalHour>
+		<ArrivalMin>10</ArrivalMin>
+	</Ferries>
+		<Ferries>
+		<Name>Danica</Name>
+		<Destination>Fredrikshamn</Destination>
+		<DepartureHour>9</DepartureHour>
+		<DepartureMin>10</DepartureMin>
+		<ArrivalHour>12</ArrivalHour>
+		<ArrivalMin>30</ArrivalMin>
+	</Ferries>
+		<Ferries>
+		<Name>Vinga</Name>
+		<Destination>Fredrikshamn</Destination>
+		<DepartureHour>11</DepartureHour>
+		<DepartureMin>0</DepartureMin>
+		<ArrivalHour>14</ArrivalHour>
+		<ArrivalMin>45</ArrivalMin>
+	</Ferries>
+		<Ferries>
+		<Name>Germanica</Name>
+		<Destination>Kiel</Destination>
+		<DepartureHour>18</DepartureHour>
+		<DepartureMin>45</DepartureMin>
+		<ArrivalHour>9</ArrivalHour>
+		<ArrivalMin>15</ArrivalMin>
+	</Ferries>
+</Vehicle>
