@@ -65,6 +65,32 @@ public class StenaFerries {
 		return ferry;
 	}
 	
+	public String getName() {
+		return ferry;
+	}
+	
+	public Date getDepartureDate() {
+		Date date = new Date();
+		date.setHours(departureHour);
+		date.setMinutes(departureMinute);
+		return date;		
+	}
+	
+	public Date getArrivalDate() {
+		Date date = new Date();
+		date.setHours(arrivalHour);
+		date.setMinutes(arrivalMinute);
+		return date;		
+	}
+	
+	public String getDepartureTime() {
+		return (departureHour < 10 ? "0" + departureHour : departureHour) + ":" + (departureMinute < 10 ? "0" + departureMinute : departureMinute);		
+	}
+	
+	public String getArrivalTime() {
+		return (arrivalHour < 10 ? "0" + arrivalHour : arrivalHour) + ":" + (arrivalMinute < 10 ? "0" + arrivalMinute : arrivalMinute);		
+	}
+	
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append(ferry);
