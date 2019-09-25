@@ -26,8 +26,10 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import edu.jutlandica.client.controller.StenaFerries;
+import edu.jutlandica.client.controller.FerryConnector;
+import edu.jutlandica.client.controller.JourneyPlanner;
 import edu.jutlandica.client.controller.VTConnector;
+import edu.jutlandica.client.dataclasses.Journey;
 
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
@@ -45,11 +47,11 @@ public class StenaJutlandica implements EntryPoint/*, Observer*/{
 	private boolean timeTableShow = true;	
 	private ArrayList<HTML> journeyPanels;
 	
-	public HTML getJourneyPanel(StenaFerries ferry) {
+	public HTML getJourneyPanel(Journey journey) {
 		HTML html = new HTML("<div class=\"vehicle\">\r\n" + 
-				"      <h1 class=\"buss\">F&#228;rja: " + ferry.getName() + "</h1>\r\n" + 
-				"      <h1 class=\"buss\">Avg&#229;ng:  " + ferry.getDepartureTime() + "</h1>\r\n" + 
-				"      <h1 class=\"buss\">Ankomst:  " + ferry.getArrivalTime() + "</h1>\r\n" + 
+				"      <h1 class=\"buss\">F&#228;rja: " + "</h1>\r\n" + 
+				"      <h1 class=\"buss\">Avg&#229;ng:  " +  "</h1>\r\n" + 
+				"      <h1 class=\"buss\">Ankomst:  " + "</h1>\r\n" + 
 				"    </div>");
 		return html;
 	}
@@ -60,6 +62,9 @@ public class StenaJutlandica implements EntryPoint/*, Observer*/{
 	 */
 	public void onModuleLoad() {
 		journeyPanels = new ArrayList<HTML>();
+		//TODO: PROBLEM IN XMLHANDLER cant read xml file
+		/*JourneyPlanner journeyplanner = new JourneyPlanner();
+		ArrayList<Journey> testlist = (ArrayList) journeyplanner.getJourneys("",FREDRIKSHAMN,"","");*/
 		
 		final HorizontalPanel formPanel = new HorizontalPanel();
 		final VerticalPanel vPanel = new VerticalPanel();
@@ -68,6 +73,7 @@ public class StenaJutlandica implements EntryPoint/*, Observer*/{
 		from.setEnabled(false);
 		
 		final VTConnector vtConnector = new VTConnector();	
+		
 		
 		// from.setStyleName("textBoxOne");
 
@@ -91,7 +97,7 @@ public class StenaJutlandica implements EntryPoint/*, Observer*/{
 		Button btn = new Button("S&#246;k Resa", new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				BusDepartures bus = null;
-				StenaFerries ferry = null; 
+				
 				
 				Date date = new Date();
 				DateTimeFormat dtf = DateTimeFormat.getFormat("HH:mm");				
@@ -101,12 +107,7 @@ public class StenaJutlandica implements EntryPoint/*, Observer*/{
 				journeyPanel.clear();
 				if (timeTableShow) {					
 					for (int i = 0; i < 4; i++) {					
-						ferry = StenaFerries.getNextDeparture(hours, minute, to.getSelectedValue()); 
-						HTML dp = getJourneyPanel(ferry);
-						journeyPanel.add(dp);
 						
-						hours = ferry.getDepartureDate().getHours();
-						minute = ferry.getDepartureDate().getMinutes();
 					}
 					//timeTableShow = false;
 				}
@@ -127,6 +128,10 @@ public class StenaJutlandica implements EntryPoint/*, Observer*/{
 			}
 		});
 		Label testlabel = new Label("hello");
+		/*for(Journey j : testlist) {
+			Label test = new Label(j.toString());
+			vPanel.add(test);
+		}*/
 		btn.setWidth("300px");
 		btn.setHeight("48px");	
 		btn.addStyleName("my-gwt-button");

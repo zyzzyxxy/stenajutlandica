@@ -23,5 +23,13 @@ public class Journey implements Journey_Interface {
     public List<Trip> getTripList() {
         return tripList;
     }
+    
+    public String toString() {
+    	StringBuilder sb = new StringBuilder();
+    	for(Trip trip : tripList) {
+    		sb.append(trip.toString()+ "\n");
+    	}
+    	return sb.toString();
+    }
 
 }

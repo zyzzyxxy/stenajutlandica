@@ -19,7 +19,8 @@
    <inherits name='com.google.gwt.user.theme.dark.Dark'/>     
 
   <!-- Other module inherits                                      -->
-
+   <inherits name="com.google.gwt.xml.XML" />
+   <inherits name="com.google.gwt.http.HTTP"/>
   <!-- Specify the app entry point class.                         -->
   <entry-point class='edu.jutlandica.client.StenaJutlandica'/>
 

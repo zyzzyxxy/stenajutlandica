@@ -8,7 +8,8 @@ import java.util.Set;
  * This class contains information of one trip with one Line between 2 stations on that specific line
  */
 public class Trip {
-    private String start_station;
+    
+	private String start_station;
     private String end_station;
     private String dep_time;
     private String direction;
@@ -42,4 +43,36 @@ public class Trip {
         }
         return result.toString();
     }
+    public String getStart_station() {
+		return start_station;
+	}
+
+	public String getEnd_station() {
+		return end_station;
+	}
+
+	public String getDep_time() {
+		return dep_time;
+	}
+
+	public String getDirection() {
+		return direction;
+	}
+
+	public String getArrival_time() {
+		return arrival_time;
+	}
+
+	public String getVehicle() {
+		return vehicle;
+	}
+
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	public Map<String, String> getClassVariables() {
+		return classVariables;
+	}
+
 }
