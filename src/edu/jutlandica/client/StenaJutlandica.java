@@ -6,6 +6,8 @@ import com.google.gwt.i18n.client.TimeZone;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Observable;
+import java.util.Observer;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.JsonUtils;
@@ -24,11 +26,13 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import edu.jutlandica.client.vtAPI.VTConnector;
+import edu.jutlandica.client.controller.StenaFerries;
+import edu.jutlandica.client.controller.VTConnector;
+
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
 
-public class StenaJutlandica implements EntryPoint {
+public class StenaJutlandica implements EntryPoint/*, Observer*/{
 
 	public static final String USER_FORM = "userForm";
 
@@ -122,11 +126,12 @@ public class StenaJutlandica implements EntryPoint {
 				ferryLabel.setText("FERRY: " + ferry.toString());*/
 			}
 		});
-		
+		Label testlabel = new Label("hello");
 		btn.setWidth("300px");
 		btn.setHeight("48px");	
 		btn.addStyleName("my-gwt-button");
 		vPanel.add(btn);
+		vPanel.add(testlabel);
 		vPanel.add(journeyPanel);
 		//journeyPanel.add(busLabel);
 		//journeyPanel.add(ferryLabel);
@@ -136,5 +141,11 @@ public class StenaJutlandica implements EntryPoint {
 		
 		RootPanel.get(USER_FORM).add(vPanel);
 	}
+/*
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO updatera guit efter arguments
+		
+	}*/
 
 }
