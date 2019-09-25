@@ -6,6 +6,7 @@ import com.google.gwt.i18n.client.TimeZone;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -26,10 +27,10 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import edu.jutlandica.client.controller.FerryConnector;
-import edu.jutlandica.client.controller.JourneyPlanner;
+import edu.jutlandica.client.controller.SearchEngine;
+import edu.jutlandica.client.controller.StenaFerries;
 import edu.jutlandica.client.controller.VTConnector;
-import edu.jutlandica.client.dataclasses.Journey;
+import edu.jutlandica.client.model.JourneyModel;
 
 import com.google.gwt.json.client.JSONParser;
 import com.google.gwt.json.client.JSONValue;
@@ -47,24 +48,12 @@ public class StenaJutlandica implements EntryPoint/*, Observer*/{
 	private boolean timeTableShow = true;	
 	private ArrayList<HTML> journeyPanels;
 	
-	public HTML getJourneyPanel(Journey journey) {
-		HTML html = new HTML("<div class=\"vehicle\">\r\n" + 
-				"      <h1 class=\"buss\">F&#228;rja: " + "</h1>\r\n" + 
-				"      <h1 class=\"buss\">Avg&#229;ng:  " +  "</h1>\r\n" + 
-				"      <h1 class=\"buss\">Ankomst:  " + "</h1>\r\n" + 
-				"    </div>");
-		return html;
-	}
-	
 	/**
 	 * 
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
 		journeyPanels = new ArrayList<HTML>();
-		//TODO: PROBLEM IN XMLHANDLER cant read xml file
-		/*JourneyPlanner journeyplanner = new JourneyPlanner();
-		ArrayList<Journey> testlist = (ArrayList) journeyplanner.getJourneys("",FREDRIKSHAMN,"","");*/
 		
 		final HorizontalPanel formPanel = new HorizontalPanel();
 		final VerticalPanel vPanel = new VerticalPanel();
@@ -73,7 +62,6 @@ public class StenaJutlandica implements EntryPoint/*, Observer*/{
 		from.setEnabled(false);
 		
 		final VTConnector vtConnector = new VTConnector();	
-		
 		
 		// from.setStyleName("textBoxOne");
 
@@ -95,43 +83,18 @@ public class StenaJutlandica implements EntryPoint/*, Observer*/{
 		final VerticalPanel journeyPanel = new VerticalPanel();		
 		
 		Button btn = new Button("S&#246;k Resa", new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				BusDepartures bus = null;
+			public void onClick(ClickEvent event) {				
+				SearchEngine searchEngine = new SearchEngine();
+				List<JourneyModel> journeyModels = searchEngine.search(from.getValue(), to.getSelectedValue(), new Date());				
+				journeyPanel.clear();	
 				
-				
-				Date date = new Date();
-				DateTimeFormat dtf = DateTimeFormat.getFormat("HH:mm");				
-				
-				int hours = date.getHours();
-				int minute = date.getMinutes();
-				journeyPanel.clear();
-				if (timeTableShow) {					
-					for (int i = 0; i < 4; i++) {					
-						
-					}
-					//timeTableShow = false;
+				for (JourneyModel jm : journeyModels) {
+					journeyPanel.add(jm.getJourneyPanel());
 				}
 				
-				/*if (to.getSelectedValue().equals(KIEL)) {
-					bus = BusDepartures.getNextDeparture(date.getHours(), date.getMinutes(), BusDepartures.TYSKLAND);
-					ferry = StenaFerries.getNextDeparture(date.getHours(), date.getMinutes(), KIEL);
-					//infoLabel.setText(dtf.format(date, TimeZone.createTimeZone(4)) + " Next departue to Kiel at " + DEPARTURE_GERMANY.toString() + ", Take bus " + buss.toString());
-				}
-				else {
-					bus = BusDepartures.getNextDeparture(date.getHours(), date.getMinutes(), BusDepartures.DANMARK);
-					ferry = StenaFerries.getNextDeparture(date.getHours(), date.getMinutes(), FREDRIKSHAMN);					
-					//infoLabel.setText(dtf.format(date, TimeZone.createTimeZone(4)) + " Next departue to Kiel at " + DEPARTURE_DENMARK.toString() + ", Take bus " + buss.toString());
-				}
-				
-				busLabel.setText("BUS: " + bus.toString());
-				ferryLabel.setText("FERRY: " + ferry.toString());*/
 			}
 		});
 		Label testlabel = new Label("hello");
-		/*for(Journey j : testlist) {
-			Label test = new Label(j.toString());
-			vPanel.add(test);
-		}*/
 		btn.setWidth("300px");
 		btn.setHeight("48px");	
 		btn.addStyleName("my-gwt-button");

@@ -25,11 +25,16 @@ public class Journey implements Journey_Interface {
     }
     
     public String toString() {
-    	StringBuilder sb = new StringBuilder();
-    	for(Trip trip : tripList) {
-    		sb.append(trip.toString()+ "\n");
+    	StringBuilder s = new StringBuilder();
+    	
+    	if (tripList.isEmpty()) s.append("NO TRIPS");
+    	
+    	for (Trip t : tripList) {
+    		s.append(t.toString());
+    		s.append("\n");
     	}
-    	return sb.toString();
+    	
+		return s.toString();    	
     }
 
 }
