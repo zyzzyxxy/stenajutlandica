@@ -1,215 +1,222 @@
 package edu.jutlandica.server;
-
 /**
  * THIS class connects with vasttrafik API and gives methods for fetching data.
+ * Authors Johan Ericsson, Daniel Danielsson
  */
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
+
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import edu.jutlandica.client.controller.*;
+import java.util.*;
 
 import javax.net.ssl.HttpsURLConnection;
-
 import org.json.*;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
-
 import edu.jutlandica.client.controller.ParameterStringBuilder;
-import edu.jutlandica.client.dataclasses.Journey;
-import edu.jutlandica.client.dataclasses.Trip;
+public class VTConnector {
+    //KEY and SECRET from personal account... Can be changed to another users account
+    final String KEY = "LKhZ7iZlmxrdSyI4OAExXOfWlkQa";
+    final String SECRET = "KHtlJozIqQ0zdiKyiy0sWuzQMu8a";
+    private String ACCESS_TOKEN = "";
+    final String USER_AGENT = "Mozilla/5.0";
+    final String VT_BASEADRESS = "https://api.vasttrafik.se/bin/rest.exe/v2";
 
-public class VTConnector implements APIconnector {
+    /**
+     * This method generates an auth_token... Needed for communication with vt api.
+     * @return
+     * @throws Exception
+     */
+    public String authenticate() throws Exception {
 
-	final String KEY = "LKhZ7iZlmxrdSyI4OAExXOfWlkQa";
-	final String SECRET = "KHtlJozIqQ0zdiKyiy0sWuzQMu8a";
-	private String ACCESS_TOKEN = "";
-	final String USER_AGENT = "Mozilla/5.0";
-	final String VT_BASEADRESS = "https://api.vasttrafik.se/bin/rest.exe/v2";
+        String url = "https://api.vasttrafik.se/token/";
+        URL obj = new URL(url);
+        HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
-	public void sendGet() throws Exception {
+        con.setDoOutput(true);
+        con.setRequestMethod("POST");
+        con.setRequestProperty("User-Agent", USER_AGENT);
+        con.setRequestMethod("POST");
+        con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        String authString = KEY + ":" + SECRET;
+        String encodedString = Base64.getEncoder().encodeToString(authString.getBytes());
+        con.setRequestProperty("Authorization", "Basic " + encodedString);
 
-		String url = "http://www.google.com/search?q=mkyong";
+        String postString = "grant_type=client_credentials&scope=device_0";
+        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+        wr.writeBytes(postString);
+        wr.flush();
+        wr.close();
 
-		URL obj = new URL(url);
-		sun.net.www.protocol.http.HttpURLConnection con = (sun.net.www.protocol.http.HttpURLConnection) obj
-				.openConnection();
+        int responseCode = con.getResponseCode();
+        System.out.println(responseCode);
+        System.out.println("\nSending 'POST' request to URL : " + url);
+        System.out.println("Post parameters : " + postString);
+        System.out.println("Response Code : " + responseCode);
 
-		// optional default is GET
-		con.setRequestMethod("GET");
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
 
-		// add request header
-		con.setRequestProperty("User-Agent", USER_AGENT);
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
 
-		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " + responseCode);
+        org.json.JSONObject jsonResponse = new org.json.JSONObject(response.toString());
+        String result = (String) jsonResponse.get("access_token");
+        System.out.println(result);
 
-		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
+        return result;
+    }
 
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-		in.close();
+    /**
+     * Help class for getTrip
+     * @param auth_token
+     * @param parameters
+     * @param vt_function
+     * @return
+     * @throws Exception
+     */
+    private JSONObject getInfoFromVT(String auth_token, Map<String, String> parameters, String vt_function) throws Exception {
 
-		// print result
-		System.out.println(response.toString());
-	}
+        String outData = "?" + ParameterStringBuilder.getParamsString(parameters);
+        String url = VT_BASEADRESS + vt_function + outData +"&json";
 
-	// authenticates and return an auth_key
-	public String authenticate() throws Exception {
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-		String url = "https://api.vasttrafik.se/token/";
-		URL obj = new URL(url);
-		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
+        // optional default is GET
+        con.setRequestMethod("GET");
+        con.setRequestProperty("Accept", "application/json"); //Doesnï¿½t help
+        // con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        con.setRequestProperty("Authorization", "Bearer " + auth_token);
 
-		con.setDoOutput(true);
-		con.setRequestMethod("POST");
-		con.setRequestProperty("User-Agent", USER_AGENT);
-		con.setRequestMethod("POST");
-		con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-		String authString = KEY + ":" + SECRET;
-		String encodedString = Base64.getEncoder().encodeToString(authString.getBytes());
-		con.setRequestProperty("Authorization", "Basic " + encodedString);
+        //add request header
+        con.setRequestProperty("User-Agent", USER_AGENT);
+        con.setDoOutput(true);
 
-		String postString = "grant_type=client_credentials&scope=device_0";
-		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-		wr.writeBytes(postString);
-		wr.flush();
-		wr.close();
+        int responseCode = con.getResponseCode();
+        System.out.println("\nSending 'GET' request to URL : " + url);
+        System.out.println("Response Code : " + responseCode);
 
-		int responseCode = con.getResponseCode();
-		System.out.println(responseCode);
-		System.out.println("\nSending 'POST' request to URL : " + url);
-		System.out.println("Post parameters : " + postString);
-		System.out.println("Response Code : " + responseCode);
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
 
-		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
 
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-		in.close();
+        System.out.println(response.toString());
+        return XML.toJSONObject(response.toString());
+    }
 
-		org.json.JSONObject jsonResponse = new org.json.JSONObject(response.toString());
-		String result = (String) jsonResponse.get("access_token");
-		System.out.println(result);
+    /**
+     * HelpClass for getTrip
+     * @param trip
+     * @return
+     * @throws JSONException
+     */
+    private Trip getTripFromJson(JSONObject trip) throws JSONException {
+        String t_start = (String) ((JSONObject) trip.get("Origin")).get("name");
+        String t_dep_time = (String) ((JSONObject) trip.get("Origin")).get("time");
+        String t_end = (String) ((JSONObject) trip.get("Destination")).get("name");
+        String t_arr_time = (String) ((JSONObject) trip.get("Destination")).get("time");
+        String t_veh = (String) trip.get("type");
+        String t_id;
+        //Try catches for 3 variations sname = string, int or when walk use "name"
+        try {
+            t_id = (String) trip.get("sname");
+        } catch (Exception e) {
+            try{
+                t_id = Integer.toString((int) trip.get("sname"));
+            }
+            catch (Exception f){
+                t_id = (String) trip.get("name");
+            }
+        }
+        //Try catch for special case of walking has no direction
+        String t_direction ="";
+        try {
+            t_direction = (String) trip.get("direction");
+        }
+        catch (Exception e){
+            t_direction = "";
+        }
+        Trip resultTrip = new Trip(t_start, t_end, t_direction, t_dep_time, t_arr_time, t_veh, t_id);
+        return resultTrip;
+    }
 
-		return result;
-	}
+    /**
+     * This method return a list of journeys form the given arguments
+     * @param auth_token
+     * @param start_station
+     * @param end_station
+     * @param time
+     * @param date
+     * @return
+     */
+//TODO i have taken care of special cases inluding trams, busses and walking... Seems to work but needs som "Stress" testing
+    public List<Journey> getTrip(String auth_token, String start_station, String end_station, String time, String date) {
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("originId", start_station);
+        parameters.put("date", date);
+        parameters.put("time", time);
+        parameters.put("destId", end_station); //seems to be optional
 
-	private JSONObject getInfoFromVT(String auth_token, Map<String, String> parameters, String vt_function)
-			throws Exception {
+        String func = "/trip";
 
-		String outData = "?" + ParameterStringBuilder.getParamsString(parameters);
+        List<Journey> resultJourneyList = new ArrayList<>();
 
-		String url = VT_BASEADRESS + vt_function + outData + "&json";
+        try {
+            JSONObject JResult = getInfoFromVT(auth_token, parameters, func);
+            JSONObject triplist = (JSONObject) JResult.get("TripList");
+            JSONArray tripArray = (JSONArray) triplist.get("Trip");
+            System.out.println(JResult.toString());
+            System.out.println(triplist.toString());
+            System.out.println(tripArray.toString());
 
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            System.out.println("Length of triplist: " + triplist.length());
+            System.out.println("Length of triparray: " + tripArray.length());
+            for(int i = 0; i<tripArray.length(); i++) {
+                Journey resJ = new Journey();
+                JSONObject trip = (JSONObject) tripArray.get(i);
+                System.out.println("class 1" + trip.get("Leg").getClass());
+                Object obj = trip.get("Leg");
+                //System.out.println("Objclass: "+obj.getClass());
+                //System.out.println("ARRÃ„JJENLENGTH: ");
+               // System.out.println(obj.toString());
+                if(obj.getClass().equals(JSONArray.class)) {
+                    JSONArray tempArr =  (JSONArray)obj;
+                    System.out.println("Obj is array of length: " + tempArr.length());
+                    System.out.println(tempArr);
+                    for (int j = 0; j< tempArr.length();j++){
+                        JSONObject jsonObject = (JSONObject)tempArr.get(j);
+                        System.out.println("Original from arr: " + jsonObject.toString());
+                        Trip resultTrip = getTripFromJson(jsonObject);
+                        resJ.addTrip(resultTrip);
+                    }
 
-		// optional default is GET
-		con.setRequestMethod("GET");
-		con.setRequestProperty("Accept", "application/json"); // Doesn´t help
-		// con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-		con.setRequestProperty("Authorization", "Bearer " + auth_token);
+                }
+                else if( obj.getClass().equals(JSONObject.class)){
+                    Trip resultTrip = getTripFromJson((JSONObject)obj);
+                    resJ.addTrip(resultTrip);
+                }
+                else{
+                    System.out.println("Something is wrong... Terrible wrong");
+                }
+                resultJourneyList.add(resJ);
+            }
+            System.out.println("length of result journeys" + resultJourneyList.toString());
+            System.out.println(resultJourneyList);
+            return resultJourneyList;
 
-		// add request header
-		con.setRequestProperty("User-Agent", USER_AGENT);
-
-		con.setDoOutput(true);
-//        DataOutputStream out = new DataOutputStream(con.getOutputStream());
-//        System.out.println(outData);
-//        out.writeBytes(outData);
-//        out.flush();
-//        out.close();
-
-		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " + responseCode);
-
-		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-		in.close();
-
-		// System.out.println(response.toString());
-		// print result
-		return XML.toJSONObject(response.toString());
-
-	}
-
-	public List<Journey> getTrip(String auth_token, String start_station, String end_station, String time,
-			String date) {
-		Map<String, String> parameters = new HashMap<>();
-		parameters.put("originId", start_station);
-		parameters.put("date", date);
-		parameters.put("time", time);
-		parameters.put("destId", end_station); // seems to be optional
-
-		String func = "/trip";
-
-		List<Journey> resultJourneyList = new ArrayList<>();
-
-		try {
-			JSONObject JResult = getInfoFromVT(auth_token, parameters, func);
-			JSONObject triplist = (JSONObject) JResult.get("TripList");
-			JSONArray tripArray = (JSONArray) triplist.get("Trip");
-			JSONObject trip = (JSONObject) tripArray.get(0);
-			trip = (JSONObject) trip.get("Leg");
-			String t_start = (String) ((JSONObject) trip.get("Origin")).get("name");
-			String t_dep_time = (String) ((JSONObject) trip.get("Origin")).get("time");
-			String t_end = (String) ((JSONObject) trip.get("Destination")).get("name");
-			String t_arr_time = (String) ((JSONObject) trip.get("Destination")).get("time");
-			String t_veh = (String) trip.get("type");
-			String t_id;
-			try {
-				t_id = (String) trip.get("sname");
-			} catch (Exception e) {
-				t_id = Integer.toString((int) trip.get("sname"));
-			}
-
-			String t_direction = (String) trip.get("direction");
-
-			Trip resultTrip = new Trip(t_start, t_end, t_direction, t_dep_time, t_arr_time, t_veh, t_id);
-			Journey resJ = new Journey();
-			resJ.addTrip(resultTrip);
-			resultJourneyList.add(resJ);
-			return resultJourneyList;
-
-			// TODO make whole jpouneys out of trips, chekc end stations
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-
-	}
-
-	@Override
-	public List<Journey> getJourneys(String to, String from, Date date) throws Exception {
-		String aut = authenticate();
-		
-		SimpleDateFormat fmtTime = new SimpleDateFormat("HH:mm");
-		SimpleDateFormat fmtDate = new SimpleDateFormat("yyyy-MM-dd");
-		
-		return getTrip(aut, to, from, fmtTime.format(date), fmtDate.format(date));
-	}
-
-}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+}}
