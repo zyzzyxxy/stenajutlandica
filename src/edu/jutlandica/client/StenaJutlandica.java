@@ -1,24 +1,15 @@
 package edu.jutlandica.client;
 
-import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.i18n.client.TimeZone;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
-
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JsonUtils;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DecoratorPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
@@ -28,22 +19,12 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.xml.client.Document;
-import com.google.gwt.xml.client.Node;
-import com.google.gwt.xml.client.NodeList;
-import com.google.gwt.xml.client.XMLParser;
-
-import edu.jutlandica.client.Message;
-import edu.jutlandica.client.MessageService;
-import edu.jutlandica.client.MessageServiceAsync;
+import edu.jutlandica.client.SearchService;
+import edu.jutlandica.client.SearchServiceAsync;
 import edu.jutlandica.client.controller.SearchEngine;
-import edu.jutlandica.client.controller.StenaFerries;
 import edu.jutlandica.client.controller.VTConnector;
 import edu.jutlandica.client.dataclasses.Journey;
 import edu.jutlandica.client.model.JourneyModel;
-
-import com.google.gwt.json.client.JSONParser;
-import com.google.gwt.json.client.JSONValue;
 
 public class StenaJutlandica implements EntryPoint/* , Observer */ {
 
@@ -58,11 +39,11 @@ public class StenaJutlandica implements EntryPoint/* , Observer */ {
 	private boolean timeTableShow = true;
 	private ArrayList<HTML> journeyPanels;
 
-	private MessageServiceAsync messageService = GWT.create(MessageService.class);
+	private SearchServiceAsync searchService = GWT.create(SearchService.class);
 	private final Label testlabel = new Label("");
 	
 	
-	private class MessageCallBack implements AsyncCallback<List<Journey>> {
+	private class SearchCallBack implements AsyncCallback<List<Journey>> {
 		@Override
 		public void onFailure(Throwable caught) {
 			/* server side error occured */
@@ -126,7 +107,7 @@ public class StenaJutlandica implements EntryPoint/* , Observer */ {
 		});
 		
 		
-		messageService.getJourneys("centralstationen", "masthuggstorget", "14:00", "2019-09-27", new MessageCallBack());
+		searchService.getJourneys("centralstationen", "masthuggstorget", new Date(), new SearchCallBack());
 
 		btn.setWidth("300px");
 		btn.setHeight("48px");
