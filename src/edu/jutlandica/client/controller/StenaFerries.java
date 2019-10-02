@@ -8,7 +8,7 @@ import edu.jutlandica.client.StenaJutlandica;
 import edu.jutlandica.client.dataclasses.Journey;
 import edu.jutlandica.client.dataclasses.Trip;
 
-public class StenaFerries implements InputInterface {
+public class StenaFerries {
 	public final static String JUTLANDICA = "Jutlandica";
 	public final static String DANICA = "Danica";
 	public final static String VINGA = "Vinga";
@@ -53,7 +53,7 @@ public class StenaFerries implements InputInterface {
 		ferries.add(j);
 	}
 	
-	@Override
+	
 	public List<Journey> getJourneys(String from, String to, String time, String date) {
 		if (ferries == null)
 			init();

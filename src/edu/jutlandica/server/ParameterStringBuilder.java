@@ -1,4 +1,4 @@
-package edu.jutlandica.client.controller;
+package edu.jutlandica.server;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
