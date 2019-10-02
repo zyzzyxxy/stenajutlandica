@@ -12,6 +12,19 @@ public class SearchEngine {
 
 	public List<Journey> getJourneys(String to, String from, Date date) {
 		List<Journey> list = new ArrayList<Journey>();
+/*
+		APIconnector vt = new VTConnector();
+		try {
+			list.addAll(vt.getJourneys(to, from, date));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
+		return list;
+	}
+	public List<Journey> getJourneysFromVt(String to, String from, Date date) {
+		List<Journey> list = new ArrayList<Journey>();
 
 		APIconnector vt = new VTConnector();
 		try {
@@ -23,4 +36,6 @@ public class SearchEngine {
 		
 		return list;
 	}
+	
+	
 }
