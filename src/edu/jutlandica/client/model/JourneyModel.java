@@ -20,15 +20,18 @@ public class JourneyModel /*implements Observable*/{
 		StringBuilder sb = new StringBuilder();
 		sb.append("<div class=\"vehicle\">");
 		for(Trip trip: journey.getTripList()) {
-			sb.append("<h1 class=\"buss\">F&#228;rja: \"");
-			sb.append(trip.getVehicle());
+			sb.append("<h1 class=\"buss\">Fordon: \"");
+			sb.append(trip.getVehicle() + ": ");
+			sb.append(trip.getIdentifier());
 			sb.append("</h1>");
 			
-			sb.append("<h1 class=\"buss\">F&#228;rja: \"");
+			sb.append("<h1 class=\"buss\">Avgång: \"");
+			sb.append(trip.getStart_station() + ": ");
 			sb.append(trip.getDep_time());
 			sb.append("</h1>");
 			
-			sb.append("<h1 class=\"buss\">F&#228;rja: \"");
+			sb.append("<h1 class=\"buss\">Ankomst: \"");
+			sb.append(trip.getEnd_station() + ": ");
 			sb.append(trip.getArrival_time());
 			sb.append("</h1>");
 			
