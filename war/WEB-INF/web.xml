@@ -5,16 +5,17 @@
          version="2.5"
          xmlns="http://java.sun.com/xml/ns/javaee">
 
-  <!-- Servlets -->
+  <!-- Servlets -->  
   <servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>edu.jutlandica.server.GreetingServiceImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/stenajutlandica/greet</url-pattern>
-  </servlet-mapping>
+      <servlet-name>searchServiceImpl</servlet-name>
+      <servlet-class>edu.jutlandica.server.SearchServiceImpl
+      </servlet-class>
+   </servlet>
+
+   <servlet-mapping>
+      <servlet-name>searchServiceImpl</servlet-name>
+      <url-pattern>/stenajutlandica/search</url-pattern>
+   </servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
