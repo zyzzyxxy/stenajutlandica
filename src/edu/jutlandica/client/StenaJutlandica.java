@@ -22,6 +22,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import edu.jutlandica.client.SearchService;
 import edu.jutlandica.client.SearchServiceAsync;
 import edu.jutlandica.client.controller.SearchEngine;
+import edu.jutlandica.client.controller.VTConnector;
 import edu.jutlandica.client.dataclasses.Journey;
 import edu.jutlandica.client.model.JourneyModel;
 
@@ -70,6 +71,7 @@ public class StenaJutlandica implements EntryPoint/* , Observer */ {
 		from.setValue("CENTRAL STATIONEN, G&#246;teborg");
 		from.setEnabled(false);
 
+		final VTConnector vtConnector = new VTConnector();
 
 		// from.setStyleName("textBoxOne");
 
@@ -92,7 +94,7 @@ public class StenaJutlandica implements EntryPoint/* , Observer */ {
 
 		Button btn = new Button("S&#246;k Resa", new ClickHandler() {
 			public void onClick(ClickEvent event) {
-			/*	SearchEngine searchEngine = new SearchEngine();
+				SearchEngine searchEngine = new SearchEngine();
 				List<JourneyModel> journeyModels = searchEngine.search(from.getValue(), to.getSelectedValue(),
 						new Date());
 				journeyPanel.clear();
@@ -100,7 +102,7 @@ public class StenaJutlandica implements EntryPoint/* , Observer */ {
 				for (JourneyModel jm : journeyModels) {
 					journeyPanel.add(jm.getJourneyPanel());
 				}
-				*/
+
 			}
 		});
 		
