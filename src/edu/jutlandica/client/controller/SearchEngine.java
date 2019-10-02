@@ -15,7 +15,7 @@ import edu.jutlandica.client.dataclasses.Trip;
 import edu.jutlandica.client.model.JourneyModel;
 
 public class SearchEngine{
-	private InputInterface ferriesInput;
+	/*private InputInterface ferriesInput;
 	private InputInterface vtInput;
 	
 	public SearchEngine() {
@@ -51,5 +51,5 @@ public class SearchEngine{
 		}		
 		
 		return journeys;
-	}
+	}*/
 }

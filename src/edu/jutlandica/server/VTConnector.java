@@ -13,8 +13,10 @@ import java.util.*;
 import javax.net.ssl.HttpsURLConnection;
 import org.json.*;
 
-import edu.jutlandica.client.controller.ParameterStringBuilder;
-public class VTConnector {
+import edu.jutlandica.client.dataclasses.Journey;
+import edu.jutlandica.client.dataclasses.Trip;
+
+public class VTConnector implements APIconnector{
     //KEY and SECRET from personal account... Can be changed to another users account
     final String KEY = "LKhZ7iZlmxrdSyI4OAExXOfWlkQa";
     final String SECRET = "KHtlJozIqQ0zdiKyiy0sWuzQMu8a";
@@ -219,4 +221,10 @@ public class VTConnector {
         }
         return null;
     }
-}}
+
+	@Override
+	public List<Journey> getJourneys(String to, String from, Date date) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}
