@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -190,7 +191,7 @@ public class VTConnector implements APIconnector{
                 Object obj = trip.get("Leg");
                 //System.out.println("Objclass: "+obj.getClass());
                 //System.out.println("ARRÄJJENLENGTH: ");
-               // System.out.println(obj.toString());
+                // System.out.println(obj.toString());
                 if(obj.getClass().equals(JSONArray.class)) {
                     JSONArray tempArr =  (JSONArray)obj;
                     System.out.println("Obj is array of length: " + tempArr.length());
@@ -219,12 +220,21 @@ public class VTConnector implements APIconnector{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return resultJourneyList;
     }
 
-	@Override
-	public List<Journey> getJourneys(String to, String from, Date date) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public List<Journey> getJourneys(String to, String from, Date date) throws Exception {
+        SimpleDateFormat frmDate = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat frmTime = new SimpleDateFormat("HH:mm");
+        String sDate = frmDate.format(date);
+        String sTime = frmTime.format(date);
+
+        String authKey = authenticate();
+        List<Journey> resultList = getTrip(authKey, from,to,sTime,sDate);
+
+
+        return resultList;
+    }
+    //TODO fix trips with equal name ieg... chapmanstorg
 }

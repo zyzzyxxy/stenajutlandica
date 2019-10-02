@@ -36,7 +36,8 @@ public class StenaJutlandica implements EntryPoint/* , Observer */ {
 	public static final String DEPARTURE_GERMANY = "16:25";
 
 	private boolean timeTableShow = true;
-	private ArrayList<HTML> journeyPanels;
+
+	final VerticalPanel journeyPanel = new VerticalPanel();
 
 	private SearchServiceAsync searchService = GWT.create(SearchService.class);
 	private final Label testlabel = new Label("");
@@ -53,7 +54,30 @@ public class StenaJutlandica implements EntryPoint/* , Observer */ {
 		public void onSuccess(List<Journey> list) {
 			/* server returned result, show user the message */
 			//Window.alert(result.getMessage());
-			testlabel.setText(list.get(0).getTripList().get(0).toString());
+			
+			//StringBuilder sb = new StringBuilder();
+			List<JourneyModel> journeyModels = new ArrayList<JourneyModel>();
+			journeyPanel.clear();
+			for(Journey j: list) {
+				journeyModels.add(new JourneyModel(j));
+				//sb.append(j.toString());
+			
+		}
+			
+			
+			
+
+			for (JourneyModel jm : journeyModels) {
+				journeyPanel.add(jm.getJourneyPanel());
+			}
+			/*
+			testlabel.setText("Testing");
+
+			if(list != null) {
+			testlabel.setText(testlabel.getText() + list.get(0).getTripList().get(0).toString());
+			}
+			else {testlabel.setText(testlabel.getText() + "  LIST WAS NULLLLLL!!!!!!!!!!!!!");}
+			*/
 		}
 	}
 
@@ -62,13 +86,13 @@ public class StenaJutlandica implements EntryPoint/* , Observer */ {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		journeyPanels = new ArrayList<HTML>();
+		
 
 		final HorizontalPanel formPanel = new HorizontalPanel();
 		final VerticalPanel vPanel = new VerticalPanel();
 		final TextBox from = new TextBox();
 		from.setValue("CENTRAL STATIONEN, G&#246;teborg");
-		from.setEnabled(false);
+		from.setEnabled(true);
 
 
 		// from.setStyleName("textBoxOne");
@@ -88,10 +112,12 @@ public class StenaJutlandica implements EntryPoint/* , Observer */ {
 		formPanel.add(to);
 		vPanel.add(formPanel);
 
-		final VerticalPanel journeyPanel = new VerticalPanel();
-
 		Button btn = new Button("S&#246;k Resa", new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				
+				
+				searchService.getJourneys(to.getSelectedValue(),from.getValue(), new Date(), new SearchCallBack());
+
 			/*	SearchEngine searchEngine = new SearchEngine();
 				List<JourneyModel> journeyModels = searchEngine.search(from.getValue(), to.getSelectedValue(),
 						new Date());
@@ -105,7 +131,7 @@ public class StenaJutlandica implements EntryPoint/* , Observer */ {
 		});
 		
 		
-		searchService.getJourneys("centralstationen", "masthuggstorget", new Date(), new SearchCallBack());
+		//searchService.getJourneys("olivedalsgatan", "masthuggstorget", new Date(), new SearchCallBack());
 
 		btn.setWidth("300px");
 		btn.setHeight("48px");
