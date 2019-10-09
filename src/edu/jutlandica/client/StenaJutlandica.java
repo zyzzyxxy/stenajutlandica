@@ -1,146 +1,157 @@
 package edu.jutlandica.client;
 
-import edu.jutlandica.shared.FieldVerifier;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyUpEvent;
-import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.HasHorizontalAlignment;
+import com.google.gwt.user.client.ui.HasVerticalAlignment;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import edu.jutlandica.client.SearchService;
+import edu.jutlandica.client.SearchServiceAsync;
+import edu.jutlandica.client.controller.SearchEngine;
+import edu.jutlandica.client.dataclasses.Journey;
+import edu.jutlandica.client.model.JourneyModel;
 
-/**
- * Entry point classes define <code>onModuleLoad()</code>.
- */
-public class StenaJutlandica implements EntryPoint {
-	/**
-	 * The message displayed to the user when the server cannot be reached or
-	 * returns an error.
-	 */
-	private static final String SERVER_ERROR = "An error occurred while "
-			+ "attempting to contact the server. Please check your network " + "connection and try again.";
+public class StenaJutlandica implements EntryPoint/* , Observer */ {
+
+	public static final String USER_FORM = "userForm";
+
+	public static final String KIEL = "Kiel";
+	public static final String FREDRIKSHAMN = "Fredrikshamn";
+
+	public static final String DEPARTURE_DENMARK = "20:30";
+	public static final String DEPARTURE_GERMANY = "16:25";
+
+	private boolean timeTableShow = true;
+
+	final VerticalPanel journeyPanel = new VerticalPanel();
+
+	private SearchServiceAsync searchService = GWT.create(SearchService.class);
+	private final Label testlabel = new Label("");
+	
+	
+	private class SearchCallBack implements AsyncCallback<List<Journey>> {
+		@Override
+		public void onFailure(Throwable caught) {
+			/* server side error occured */
+			Window.alert("Unable to obtain server response: " + caught.getMessage());
+		}
+		
+		@Override
+		public void onSuccess(List<Journey> list) {
+			/* server returned result, show user the message */
+			//Window.alert(result.getMessage());
+			
+			//StringBuilder sb = new StringBuilder();
+			List<JourneyModel> journeyModels = new ArrayList<JourneyModel>();
+			journeyPanel.clear();
+			for(Journey j: list) {
+				journeyModels.add(new JourneyModel(j));
+				//sb.append(j.toString());
+			
+		}
+			
+			
+			
+
+			for (JourneyModel jm : journeyModels) {
+				journeyPanel.add(jm.getJourneyPanel());
+			}
+			/*
+			testlabel.setText("Testing");
+
+			if(list != null) {
+			testlabel.setText(testlabel.getText() + list.get(0).getTripList().get(0).toString());
+			}
+			else {testlabel.setText(testlabel.getText() + "  LIST WAS NULLLLLL!!!!!!!!!!!!!");}
+			*/
+		}
+	}
 
 	/**
-	 * Create a remote service proxy to talk to the server-side Greeting service.
-	 */
-	private final GreetingServiceAsync greetingService = GWT.create(GreetingService.class);
-
-	/**
+	 * 
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		final Button sendButton = new Button("Send");
-		final TextBox nameField = new TextBox();
-		nameField.setText("GWT User");
-		final Label errorLabel = new Label();
+		
 
-		// We can add style names to widgets
-		sendButton.addStyleName("sendButton");
+		final HorizontalPanel formPanel = new HorizontalPanel();
+		final VerticalPanel vPanel = new VerticalPanel();
+		final TextBox from = new TextBox();
+		from.setValue("centralstationen");
+		from.setEnabled(true);
 
-		// Add the nameField and sendButton to the RootPanel
-		// Use RootPanel.get() to get the entire body element
-		RootPanel.get("nameFieldContainer").add(nameField);
-		RootPanel.get("sendButtonContainer").add(sendButton);
-		RootPanel.get("errorLabelContainer").add(errorLabel);
 
-		// Focus the cursor on the name field when the app loads
-		nameField.setFocus(true);
-		nameField.selectAll();
+		// from.setStyleName("textBoxOne");
 
-		// Create the popup dialog box
-		final DialogBox dialogBox = new DialogBox();
-		dialogBox.setText("Remote Procedure Call");
-		dialogBox.setAnimationEnabled(true);
-		final Button closeButton = new Button("Close");
-		// We can set the id of a widget by accessing its Element
-		closeButton.getElement().setId("closeButton");
-		final Label textToServerLabel = new Label();
-		final HTML serverResponseLabel = new HTML();
-		VerticalPanel dialogVPanel = new VerticalPanel();
-		dialogVPanel.addStyleName("dialogVPanel");
-		dialogVPanel.add(new HTML("<b>Sending name to the server:</b>"));
-		dialogVPanel.add(textToServerLabel);
-		dialogVPanel.add(new HTML("<br><b>Server replies:</b>"));
-		dialogVPanel.add(serverResponseLabel);
-		dialogVPanel.setHorizontalAlignment(VerticalPanel.ALIGN_RIGHT);
-		dialogVPanel.add(closeButton);
-		dialogBox.setWidget(dialogVPanel);
+		// Add a drop box with the list types
+		final ListBox to = new ListBox();
+		to.addItem(KIEL);
+		to.addItem(FREDRIKSHAMN);
 
-		// Add a handler to close the DialogBox
-		closeButton.addClickHandler(new ClickHandler() {
+		vPanel.setWidth("100%");
+		vPanel.setHeight("100%");
+		vPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		vPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
+
+		formPanel.setSpacing(12);
+		formPanel.add(from);
+		formPanel.add(to);
+		vPanel.add(formPanel);
+
+		Button btn = new Button("S&#246;k Resa", new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				dialogBox.hide();
-				sendButton.setEnabled(true);
-				sendButton.setFocus(true);
+				
+				
+				searchService.getJourneys(to.getSelectedValue(),from.getValue(), new Date(), new SearchCallBack());
+
+			/*	SearchEngine searchEngine = new SearchEngine();
+				List<JourneyModel> journeyModels = searchEngine.search(from.getValue(), to.getSelectedValue(),
+						new Date());
+				journeyPanel.clear();
+
+				for (JourneyModel jm : journeyModels) {
+					journeyPanel.add(jm.getJourneyPanel());
+				}
+				*/
 			}
 		});
+		
+		
+		//searchService.getJourneys("olivedalsgatan", "masthuggstorget", new Date(), new SearchCallBack());
 
-		// Create a handler for the sendButton and nameField
-		class MyHandler implements ClickHandler, KeyUpHandler {
-			/**
-			 * Fired when the user clicks on the sendButton.
-			 */
-			public void onClick(ClickEvent event) {
-				sendNameToServer();
-			}
+		btn.setWidth("300px");
+		btn.setHeight("48px");
+		btn.addStyleName("my-gwt-button");
+		vPanel.add(btn);
+		vPanel.add(testlabel);
+		vPanel.add(journeyPanel);
+		// journeyPanel.add(busLabel);
+		// journeyPanel.add(ferryLabel);
+		// dp.add(journeyPanel);
 
-			/**
-			 * Fired when the user types in the nameField.
-			 */
-			public void onKeyUp(KeyUpEvent event) {
-				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
-					sendNameToServer();
-				}
-			}
+		// vPanel.add(dp);
 
-			/**
-			 * Send the name from the nameField to the server and wait for a response.
-			 */
-			private void sendNameToServer() {
-				// First, we validate the input.
-				errorLabel.setText("");
-				String textToServer = nameField.getText();
-				if (!FieldVerifier.isValidName(textToServer)) {
-					errorLabel.setText("Please enter at least four characters");
-					return;
-				}
-
-				// Then, we send the input to the server.
-				sendButton.setEnabled(false);
-				textToServerLabel.setText(textToServer);
-				serverResponseLabel.setText("");
-				greetingService.greetServer(textToServer, new AsyncCallback<String>() {
-					public void onFailure(Throwable caught) {
-						// Show the RPC error message to the user
-						dialogBox.setText("Remote Procedure Call - Failure");
-						serverResponseLabel.addStyleName("serverResponseLabelError");
-						serverResponseLabel.setHTML(SERVER_ERROR);
-						dialogBox.center();
-						closeButton.setFocus(true);
-					}
-
-					public void onSuccess(String result) {
-						dialogBox.setText("Remote Procedure Call");
-						serverResponseLabel.removeStyleName("serverResponseLabelError");
-						serverResponseLabel.setHTML(result);
-						dialogBox.center();
-						closeButton.setFocus(true);
-					}
-				});
-			}
-		}
-
-		// Add a handler to send the name to the server
-		MyHandler handler = new MyHandler();
-		sendButton.addClickHandler(handler);
-		nameField.addKeyUpHandler(handler);
+		RootPanel.get(USER_FORM).add(vPanel);
 	}
+	/*
+	 * @Override public void update(Observable o, Object arg) { // TODO updatera
+	 * guit efter arguments
+	 * 
+	 * }
+	 */
+
 }
