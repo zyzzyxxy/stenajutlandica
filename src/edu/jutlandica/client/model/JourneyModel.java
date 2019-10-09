@@ -1,11 +1,13 @@
 package edu.jutlandica.client.model;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.text.StrBuilder;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -60,13 +62,20 @@ public class JourneyModel /* implements Observable */ {
 	public HTML getHeader() {
 		StringBuilder sb = new StringBuilder();
 		List<Trip> trips = journey.getTripList();
+		Date depDate = trips.get(0).getDepDate();
+		Date arrivalDate = trips.get(trips.size()-1).getArrivalDate();
+		DateTimeFormat fmt1 = DateTimeFormat.getFormat("yyyy-MM-dd HH:mm");
+		DateTimeFormat fmt2 = DateTimeFormat.getFormat("HH:mm");
+		long travelTime = arrivalDate.getTime() - depDate.getTime();
+		
 		sb.append("<div class=\"header\">");
 		
 		sb.append("<h1 class=\"buss\">");
 		sb.append(trips.get(0).getStart_station() + " -> ");
-		sb.append(trips.get(0).getDep_time());
+		sb.append(fmt1.format(depDate));
 		sb.append(" - ");
-		sb.append(trips.get(trips.size()-1).getArrival_time());
+		sb.append(fmt2.format(arrivalDate));
+		sb.append("   Restid " + (travelTime / (60 * 60 * 1000) % 24) + " h " + (travelTime / (60 * 1000) % 60) + " min");
 		sb.append("</h1>");
 		
 		sb.append("</div>");
