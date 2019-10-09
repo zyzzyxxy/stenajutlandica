@@ -1,6 +1,7 @@
 package edu.jutlandica.server;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -69,8 +70,9 @@ public class FerryConnector implements APIconnector{
 	 * @param listOfFerries a list of ferry nodes, will be converted over to trip
 	 * @return a list of trips containing the ferries from the list of nodes
 	 */
-	private List<Trip> getTripsToEndDest(List<Node> listOfFerries){
+	private List<Trip> getTripsToEndDest(List<Node> listOfFerries) throws Exception{
 		ArrayList<Trip> ret = new ArrayList<>();
+		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd'T'HH:mm:ss");
 		
 		for(Node ferry: listOfFerries) {
 			if (ferry.getNodeType() == Node.ELEMENT_NODE) {
@@ -78,8 +80,8 @@ public class FerryConnector implements APIconnector{
 				ret.add(new Trip("Goteborgs Hamn",
 						e.getElementsByTagName("Destination").item(0).getTextContent(),
 						"MOT" + e.getElementsByTagName("Destination").item(0).getTextContent(),
-						e.getElementsByTagName("DepartureTime").item(0).getTextContent(),
-						e.getElementsByTagName("ArrivalTime").item(0).getTextContent(),
+						sdf.parse(e.getElementsByTagName("DepartureTime").item(0).getTextContent()),
+						sdf.parse(e.getElementsByTagName("ArrivalTime").item(0).getTextContent()),
 						"Ferry",
 						e.getElementsByTagName("Name").item(0).getTextContent()));
 				}

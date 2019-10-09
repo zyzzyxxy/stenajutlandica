@@ -30,6 +30,7 @@ public class Trip implements Serializable {
 	
 	public Trip() {}
 	
+	@Deprecated
 	public Trip(String start_station, String end_station, String direction, String dep_time, String arrival_time,
 			String vehicle, String identifier) {
 		this.start_station = start_station;
@@ -87,7 +88,8 @@ public class Trip implements Serializable {
 	public String getEnd_station() {
 		return end_station;
 	}
-
+	
+	@Deprecated
 	public String getDep_time() {
 		DateTimeFormat fmt = DateTimeFormat.getFormat("HH:mm");
 		return fmt.format(dep_time);
@@ -100,7 +102,8 @@ public class Trip implements Serializable {
 	public String getDirection() {
 		return direction;
 	}
-
+	
+	@Deprecated
 	public String getArrival_time() {
 		DateTimeFormat fmt = DateTimeFormat.getFormat("HH:mm");
 		return fmt.format(arrival_time);

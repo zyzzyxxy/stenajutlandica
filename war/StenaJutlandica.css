@@ -87,3 +87,13 @@
     width: 100%;
     text-align: center;
   }
+  
+.gwt-RadioButton {
+	margin: 10px;
+	font-size: 2em;
+	color: #000000 !important;
+}
+
+.gwt-RadioButton-disabled {
+  color: #6ac44d !important;
+}
