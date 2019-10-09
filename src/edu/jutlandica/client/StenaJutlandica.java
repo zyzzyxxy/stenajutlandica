@@ -25,6 +25,7 @@ import edu.jutlandica.client.controller.SearchEngine;
 import edu.jutlandica.client.dataclasses.Journey;
 import edu.jutlandica.client.dataclasses.Trip;
 import edu.jutlandica.client.model.JourneyModel;
+import edu.jutlandica.client.model.JourneyModelPanel;
 import edu.jutlandica.client.model.TimePanel;
 
 public class StenaJutlandica implements EntryPoint/* , Observer */ {

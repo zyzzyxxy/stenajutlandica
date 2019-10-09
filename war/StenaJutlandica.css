@@ -65,8 +65,21 @@
 
   .vehicle{
     margin: auto;
-    margin-top: 5px;
-    width: 320px;
+    margin-top: 0px;
+    width: 640px;
+    padding: 3 px;
+    border: 1px solid gray;
+    background-color: gray;
+    color: black;
+    text-align: left;
+  }
+  
+  .header{
+    margin: auto;
+    font-size: 200%;
+    margin-top: 0px;
+    width: 640px;
+    height: 32px;
     padding: 3px;
     border: 1px solid gray;
     background-color: white;

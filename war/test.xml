@@ -12,13 +12,31 @@
 		<DepartureTime>2019-10-09T09:10:00</DepartureTime>
 		<ArrivalTime>2019-10-09T12:30:00</ArrivalTime>
 	</Ferries>
-		<Ferries>
+	<Ferries>
 		<Name>Vinga</Name>
 		<Destination>Fredrikshamn</Destination>
 		<DepartureTime>2019-10-09T11:00:00</DepartureTime>
 		<ArrivalTime>2019-10-09T14:45:00</ArrivalTime>
 	</Ferries>
+	<Ferries>
+		<Name>Jutlandica</Name>
+		<Destination>Fredrikshamn</Destination>
+		<DepartureTime>2019-10-09T16:00:00</DepartureTime>
+		<ArrivalTime>2019-10-09T19:25:00</ArrivalTime>
+	</Ferries>
 		<Ferries>
+		<Name>Danica</Name>
+		<Destination>Fredrikshamn</Destination>
+		<DepartureTime>2019-10-09T18:20:00</DepartureTime>
+		<ArrivalTime>2019-10-09T21:50:00</ArrivalTime>
+	</Ferries>
+	<Ferries>
+		<Name>Vinga</Name>
+		<Destination>Fredrikshamn</Destination>
+		<DepartureTime>2019-10-09T22:10:00</DepartureTime>
+		<ArrivalTime>2019-10-10T01:30:00</ArrivalTime>
+	</Ferries>
+	<Ferries>
 		<Name>Germanica</Name>
 		<Destination>Kiel</Destination>
 		<DepartureTime>2019-10-09T18:45:00</DepartureTime>

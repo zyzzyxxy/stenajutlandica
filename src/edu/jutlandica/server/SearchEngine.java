@@ -39,7 +39,7 @@ public class SearchEngine {
 				List<Trip> ferryTripList = j.getTripList();
 				ferryTripList.add(0, new Trip(vtTo, "Terminalen", "", busActualArrivalTime, new Date(busActualArrivalTime.getTime() + TERMINAL_WAIT_TIME), "WALK/WAIT", "GA"));
 				ferryTripList.addAll(0, vtData.get(0).getTripList());
-				if (++count > 2) break;
+				if (++count > 5) break;
 			}
 		} catch (Exception e) { e.printStackTrace(); }
 		return list;

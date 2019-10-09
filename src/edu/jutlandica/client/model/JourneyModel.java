@@ -4,70 +4,112 @@ import java.util.List;
 
 import org.apache.commons.lang3.text.StrBuilder;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.HTML;
-
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 import edu.jutlandica.client.controller.StenaFerries;
 import edu.jutlandica.client.dataclasses.Journey;
 import edu.jutlandica.client.dataclasses.Trip;
 
-public class JourneyModel /*implements Observable*/{
-	
+public class JourneyModel /* implements Observable */ {
+
 	Journey journey;
-	//TODO for all trips in journey dispaly relevant information
+	final VerticalPanel basePanel;
+	private boolean open = false;
+
+	public JourneyModel() {
+		basePanel = new VerticalPanel();
+	}
+
+	// TODO for all trips in journey dispaly relevant information
 	public JourneyModel(Journey journey) {
+		basePanel = new VerticalPanel();
 		this.journey = journey;
 	}
-	
-	public HTML getJourneyPanel() {
+
+	public String getTripTag(Trip trip) {
 		StringBuilder sb = new StringBuilder();
-		List<Trip> trips = journey.getTripList();
+		sb.append("<h1 class=\"buss\">Fordon: ");
+		sb.append(trip.getVehicle() + ": ");
+		sb.append(trip.getIdentifier());
+		sb.append("</h1>");
+
+		sb.append("<h1 class=\"buss\">Avgång: ");
+		sb.append(trip.getStart_station() + ": ");
+		sb.append(trip.getDep_time());
+		sb.append("</h1>");
+
+		sb.append("<h1 class=\"buss\">Ankomst: ");
+		sb.append(trip.getEnd_station() + ": ");
+		sb.append(trip.getArrival_time());
+		sb.append("</h1>");
+		return sb.toString();
+	}
+
+	public HTML getFirstTrip() {
+		StringBuilder sb = new StringBuilder();
+		Trip trip = journey.getTripList().get(0);
 		sb.append("<div class=\"vehicle\">");
-		for(Trip trip: trips) {
-			sb.append("<h1 class=\"buss\">Fordon: ");
-			sb.append(trip.getVehicle() + ": ");
-			sb.append(trip.getIdentifier());
-			sb.append("</h1>");
-			
-			sb.append("<h1 class=\"buss\">Avgång: ");
-			sb.append(trip.getStart_station() + ": ");
-			sb.append(trip.getDep_time());
-			sb.append("</h1>");
-			
-			sb.append("<h1 class=\"buss\">Ankomst: ");
-			sb.append(trip.getEnd_station() + ": ");
-			sb.append(trip.getArrival_time());
-			sb.append("</h1>");
-			
-			if (!trips.get(trips.size()-1).equals(trip)) {
-				sb.append("<h1 class=\"buss\"> ___next_trip___</h1>");
-			}
-			
-		}
+		sb.append(getTripTag(trip));
 		sb.append("</div>");
-		
-		/*HTML html = new HTML("<div class=\"vehicle\">\r\n" + 
-				"      <h1 class=\"buss\">F&#228;rja: " + trip.getVehicle() + "</h1>\r\n" + 
-				"      <h1 class=\"buss\">Avg&#229;ng:  " + trip.getDep_time() + "</h1>\r\n" + 
-				"      <h1 class=\"buss\">Ankomst:  " + trip.getArrival_time() + "</h1>\r\n" + 
-				"    </div>");*/
 		return new HTML(sb.toString());
 	}
 	
+	public HTML getHeader() {
+		StringBuilder sb = new StringBuilder();
+		List<Trip> trips = journey.getTripList();
+		sb.append("<div class=\"header\">");
+		
+		sb.append("<h1 class=\"buss\">");
+		sb.append(trips.get(0).getStart_station() + " -> ");
+		sb.append(trips.get(0).getDep_time());
+		sb.append(" - ");
+		sb.append(trips.get(trips.size()-1).getArrival_time());
+		sb.append("</h1>");
+		
+		sb.append("</div>");
+		return new HTML(sb.toString());
+	}
+
+	public HTML getAllTrips() {
+		StringBuilder sb = new StringBuilder();
+		List<Trip> trips = journey.getTripList();
+		sb.append("<div class=\"vehicle\">");
+		for (Trip trip : trips) {
+			sb.append(getTripTag(trip));
+			if (!trips.get(trips.size() - 1).equals(trip)) {
+				sb.append("<h1 class=\"buss\"> ___next_trip___</h1>");
+			}
+		}
+		sb.append("</div>");
+		return new HTML(sb.toString());
+	}
+	
+	HTML header;
+	public Widget getJourneyPanel() {
+		header = getHeader();
+		open = false;
+
+		header.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				if (open) {
+					basePanel.clear();
+					basePanel.add(header);
+					open = false;
+				} else {
+					basePanel.add(getAllTrips());
+					open = true;
+				}
+			}
+		});
+
+		basePanel.add(header);
+		return basePanel;
+	}
+
 	public String toString() {
 		return journey.toString();
 	}
-	
-	/*
-	@Override
-	public void addListener(InvalidationListener listener) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeListener(InvalidationListener listener) {
-		// TODO Auto-generated method stub
-		
-	}*/
-
 }
