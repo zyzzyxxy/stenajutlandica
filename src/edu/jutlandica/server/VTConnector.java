@@ -232,10 +232,25 @@ public class VTConnector implements APIconnector{
         String sTime = frmTime.format(date);
 
         String authKey = authenticate();
-        List<Journey> resultList = getTrip(authKey, from,to,sTime,sDate,1);
+               String from_id = getIdFromName(from, authKey);
+        String to_id = getIdFromName(to, authKey);
 
+        List<Journey> resultList = getTrip(authKey, from_id, to_id, sTime, sDate, 1);
 
         return resultList;
     }
-    //TODO fix trips with equal name ieg... chapmanstorg
+
+    private String getIdFromName(String arg, String authToken) throws Exception {
+        String func = "/location.name";
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("input", arg);
+
+        JSONObject result = getInfoFromVT(authToken, parameters, func);
+        JSONObject level1 = (JSONObject) result.get("LocationList");
+        JSONArray level2 = (JSONArray)level1.get("StopLocation");
+        JSONObject level3 = (JSONObject) level2.get(0);
+        String id = level3.get("id").toString();
+        System.out.println(id);
+        return id;
+    }
 }
