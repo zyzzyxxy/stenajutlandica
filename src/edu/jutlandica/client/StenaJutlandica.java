@@ -25,6 +25,7 @@ import edu.jutlandica.client.controller.SearchEngine;
 import edu.jutlandica.client.dataclasses.Journey;
 import edu.jutlandica.client.dataclasses.Trip;
 import edu.jutlandica.client.model.JourneyModel;
+import edu.jutlandica.client.model.TimePanel;
 
 public class StenaJutlandica implements EntryPoint/* , Observer */ {
 
@@ -39,6 +40,7 @@ public class StenaJutlandica implements EntryPoint/* , Observer */ {
 
 	private SearchServiceAsync searchService = GWT.create(SearchService.class);
 	private final Label testlabel = new Label("");
+	private TimePanel timePanel;
 
 	private class SearchCallBack implements AsyncCallback<List<Journey>> {
 		@Override
@@ -88,7 +90,8 @@ public class StenaJutlandica implements EntryPoint/* , Observer */ {
 		final ListBox to = new ListBox();
 		to.addItem(KIEL);
 		to.addItem(FREDRIKSHAMN);
-
+		timePanel = new TimePanel();
+		
 		vPanel.setWidth("100%");
 		vPanel.setHeight("100%");
 		vPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
@@ -101,13 +104,14 @@ public class StenaJutlandica implements EntryPoint/* , Observer */ {
 
 		Button btn = new Button("S&#246;k Resa", new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				searchService.getJourneys(to.getSelectedValue(), from.getValue(), new Date(), new SearchCallBack());
+				searchService.getJourneys(to.getSelectedValue(), from.getValue(), timePanel.getDate(), new SearchCallBack());
 			}
 		});
 
 		btn.setWidth("300px");
 		btn.setHeight("48px");
 		btn.addStyleName("my-gwt-button");
+		vPanel.add(timePanel.getTimePanel());
 		vPanel.add(btn);
 		vPanel.add(testlabel);
 		vPanel.add(journeyPanel);
