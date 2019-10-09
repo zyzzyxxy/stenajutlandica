@@ -28,7 +28,7 @@ public class JourneyModel /*implements Observable*/{
 			sb.append(trip.getIdentifier());
 			sb.append("</h1>");
 			
-			sb.append("<h1 class=\"buss\">Avgång: ");
+			sb.append("<h1 class=\"buss\">AvgÃ¥ng: ");
 			sb.append(trip.getStart_station() + ": ");
 			sb.append(trip.getDep_time());
 			sb.append("</h1>");

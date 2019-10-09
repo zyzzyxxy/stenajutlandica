@@ -19,7 +19,7 @@ public class SearchEngine {
 		String vtTo = "";
 
 		if(to.equals(StenaJutlandica.KIEL))
-			vtTo = "stigbergstorget";
+			vtTo = "Chapmans Torg";
 		else 
 			vtTo = "masthuggstorget";		
 		
