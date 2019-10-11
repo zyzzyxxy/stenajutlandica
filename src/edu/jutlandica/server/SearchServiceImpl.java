@@ -14,6 +14,12 @@ public class SearchServiceImpl extends RemoteServiceServlet implements SearchSer
 
 	public List<Journey> getJourneys(String to, String from, Date date) {
 		SearchEngine search = new SearchEngine();
-		return search.getJourneys(to, from, date);
+		try {
+			return search.getJourneys(to, from, date);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

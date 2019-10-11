@@ -20,6 +20,7 @@ public class FerryConnector implements APIconnector{
 /*
  * This class reads a xml file on the server and returns data to the client
  */
+	public static final SimpleDateFormat SIRI_TIME_FORMAT = new SimpleDateFormat("yy-MM-dd'T'HH:mm:ss"); //SIRI time format
 	
 	@Override
 	public List<Journey> getJourneys(String to, String from, Date date) throws Exception {
@@ -48,7 +49,6 @@ public class FerryConnector implements APIconnector{
 	 * @return List of nodes containing all ferry to end destination
 	 */
 	private List<Node> searchEndDestXML(String searchString, Document doc) {
-
 		NodeList listOfFerries = doc.getElementsByTagName("Ferries");
 		ArrayList<Node> ret = new ArrayList<>();
 		for (int temps = 0; temps < listOfFerries.getLength(); temps++) {
@@ -72,7 +72,6 @@ public class FerryConnector implements APIconnector{
 	 */
 	private List<Trip> getTripsToEndDest(List<Node> listOfFerries) throws Exception{
 		ArrayList<Trip> ret = new ArrayList<>();
-		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd'T'HH:mm:ss");
 		
 		for(Node ferry: listOfFerries) {
 			if (ferry.getNodeType() == Node.ELEMENT_NODE) {
@@ -80,8 +79,8 @@ public class FerryConnector implements APIconnector{
 				ret.add(new Trip("Goteborgs Hamn",
 						e.getElementsByTagName("Destination").item(0).getTextContent(),
 						"MOT" + e.getElementsByTagName("Destination").item(0).getTextContent(),
-						sdf.parse(e.getElementsByTagName("DepartureTime").item(0).getTextContent()),
-						sdf.parse(e.getElementsByTagName("ArrivalTime").item(0).getTextContent()),
+						SIRI_TIME_FORMAT.parse(e.getElementsByTagName("DepartureTime").item(0).getTextContent()),
+						SIRI_TIME_FORMAT.parse(e.getElementsByTagName("ArrivalTime").item(0).getTextContent()),
 						"Ferry",
 						e.getElementsByTagName("Name").item(0).getTextContent()));
 				}

@@ -14,7 +14,7 @@ public class SearchEngine {
 	public SearchEngine() {
 	}
 
-	public List<Journey> getJourneys(String to, String from, Date date) {
+	public List<Journey> getJourneys(String to, String from, Date date) throws Exception {
 		List<Journey> list = new ArrayList<Journey>();
 		String vtTo = "";
 
@@ -25,7 +25,7 @@ public class SearchEngine {
 		
 		APIconnector vt = new VTConnector();
 		
-		APIconnector fc = new FerryConnector();
+		APIconnector fc = new SIRIreader();
 		
 		try {
 			list.addAll(fc.getJourneys(to, from, date));

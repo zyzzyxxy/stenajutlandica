@@ -46,42 +46,7 @@
 					<IsCompleteStopSequence>true</IsCompleteStopSequence>
 				</EstimatedVehicleJourney>
 				<EstimatedVehicleJourney>
-					<LineRef>STENA:Jutlandica</LineRef>
-					<DirectionRef>Fredrikshamn</DirectionRef>
-					<FramedVehicleJourneyRef>
-						<DataFrameRef>2019-10-11</DataFrameRef>
-						<DatedVehicleJourneyRef>NSB:ServiceJourney:1-2492-2343
-						</DatedVehicleJourneyRef>
-					</FramedVehicleJourneyRef>
-					<VehicleMode>ferry</VehicleMode>
-					<OriginName>Göteborg</OriginName>
-					<OperatorRef>Stena</OperatorRef>
-					<EstimatedCalls>
-						<EstimatedCall>
-							<StopPointRef>NSR:Quay:709</StopPointRef>
-							<Order>1</Order>
-							<StopPointName>Göteborg</StopPointName>
-							<RequestStop>false</RequestStop>
-							<AimedDepartureTime>2019-10-11T00:30:00</AimedDepartureTime>
-							<ExpectedDepartureTime>2019-10-11T00:30:00</ExpectedDepartureTime>
-							<DepartureStatus>onTime</DepartureStatus>
-							<DepartureBoardingActivity>boarding</DepartureBoardingActivity>
-						</EstimatedCall>
-						<EstimatedCall>
-							<StopPointRef>NSR:Quay:1078</StopPointRef>
-							<Order>2</Order>
-							<StopPointName>Fredrikshamn</StopPointName>
-							<RequestStop>false</RequestStop>
-							<AimedArrivalTime>2019-10-09T04:10:00</AimedArrivalTime>
-							<ExpectedArrivalTime>2019-10-09T04:10:00</ExpectedArrivalTime>
-							<ArrivalStatus>onTime</ArrivalStatus>
-							<ArrivalBoardingActivity>alighting</ArrivalBoardingActivity>
-						</EstimatedCall>
-					</EstimatedCalls>
-					<IsCompleteStopSequence>true</IsCompleteStopSequence>
-				</EstimatedVehicleJourney>
-				<EstimatedVehicleJourney>
-					<LineRef>STENA:Jutlandica</LineRef>
+					<LineRef>STENA:Danica</LineRef>
 					<DirectionRef>Fredrikshamn</DirectionRef>
 					<FramedVehicleJourneyRef>
 						<DataFrameRef>2019-10-11</DataFrameRef>
@@ -116,7 +81,7 @@
 					<IsCompleteStopSequence>true</IsCompleteStopSequence>
 				</EstimatedVehicleJourney>
 				<EstimatedVehicleJourney>
-					<LineRef>STENA:Jutlandica</LineRef>
+					<LineRef>STENA:Vinga</LineRef>
 					<DirectionRef>Fredrikshamn</DirectionRef>
 					<FramedVehicleJourneyRef>
 						<DataFrameRef>2019-10-11</DataFrameRef>
@@ -186,7 +151,7 @@
 					<IsCompleteStopSequence>true</IsCompleteStopSequence>
 				</EstimatedVehicleJourney>
 				<EstimatedVehicleJourney>
-					<LineRef>STENA:Jutlandica</LineRef>
+					<LineRef>STENA:Danica</LineRef>
 					<DirectionRef>Fredrikshamn</DirectionRef>
 					<FramedVehicleJourneyRef>
 						<DataFrameRef>2019-10-11</DataFrameRef>
@@ -221,7 +186,7 @@
 					<IsCompleteStopSequence>true</IsCompleteStopSequence>
 				</EstimatedVehicleJourney>
 				<EstimatedVehicleJourney>
-					<LineRef>STENA:Jutlandica</LineRef>
+					<LineRef>STENA:Vinga</LineRef>
 					<DirectionRef>Fredrikshamn</DirectionRef>
 					<FramedVehicleJourneyRef>
 						<DataFrameRef>2019-10-11</DataFrameRef>
@@ -238,7 +203,7 @@
 							<StopPointName>Göteborg</StopPointName>
 							<RequestStop>false</RequestStop>
 							<AimedDepartureTime>2019-10-09T22:10:00</AimedDepartureTime>
-							<ExpectedDepartureTime>2019-10-10T01:30:00</ExpectedDepartureTime>
+							<ExpectedDepartureTime>2019-10-09T22:10:00</ExpectedDepartureTime>
 							<DepartureStatus>onTime</DepartureStatus>
 							<DepartureBoardingActivity>boarding</DepartureBoardingActivity>
 						</EstimatedCall>
@@ -247,8 +212,8 @@
 							<Order>2</Order>
 							<StopPointName>Fredrikshamn</StopPointName>
 							<RequestStop>false</RequestStop>
-							<AimedArrivalTime>2019-10-09T04:10:00</AimedArrivalTime>
-							<ExpectedArrivalTime>2019-10-09T04:10:00</ExpectedArrivalTime>
+							<AimedArrivalTime>2019-10-10T01:30:00</AimedArrivalTime>
+							<ExpectedArrivalTime>2019-10-10T01:30:00</ExpectedArrivalTime>
 							<ArrivalStatus>onTime</ArrivalStatus>
 							<ArrivalBoardingActivity>alighting</ArrivalBoardingActivity>
 						</EstimatedCall>
@@ -256,7 +221,7 @@
 					<IsCompleteStopSequence>true</IsCompleteStopSequence>
 				</EstimatedVehicleJourney>
 				<EstimatedVehicleJourney>
-					<LineRef>STENA:Jutlandica</LineRef>
+					<LineRef>STENA:Germanica</LineRef>
 					<DirectionRef>Kiel</DirectionRef>
 					<FramedVehicleJourneyRef>
 						<DataFrameRef>2019-10-11</DataFrameRef>
