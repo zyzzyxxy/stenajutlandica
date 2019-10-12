@@ -253,4 +253,21 @@ public class VTConnector implements APIconnector{
         System.out.println(id);
         return id;
     }
+    public float[] getLonLatFromStation(String station) throws Exception {
+        String authKey = authenticate();
+        String func = "/location.name";
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("input", station);
+
+        JSONObject result = getInfoFromVT(authKey, parameters, func);
+        JSONObject level1 = (JSONObject) result.get("LocationList");
+        JSONArray level2 = (JSONArray)level1.get("StopLocation");
+        JSONObject level3 = (JSONObject) level2.get(0);
+        System.out.println(level3.toString());
+        String lon = level3.get("lon").toString();
+        String lat = level3.get("lat").toString();
+        float[] lonlat ={Float.parseFloat(lon), Float.parseFloat(lat)};
+
+        return lonlat;
+    }
 }
