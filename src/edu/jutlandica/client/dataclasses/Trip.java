@@ -26,6 +26,7 @@ public class Trip implements Serializable {
 	private Date arrival_time;
 	private String vehicle;
 	private String identifier;
+	private String track;
 	Map<String, String> classVariables = new HashMap<>();
 	
 	public Trip() {}
@@ -78,9 +79,9 @@ public class Trip implements Serializable {
      public Trip(String start_station, String end_station, String direction, String dep_time, String arrival_time, String vehicle, String identifier, String track) {
         this.start_station = start_station;
         this.end_station = end_station;
-        this.dep_time = dep_time;
+        this.dep_time = parseDate(dep_time);
         this.direction = direction;
-        this.arrival_time = arrival_time;
+        this.arrival_time = parseDate(arrival_time);
         this.vehicle = vehicle;
         this.identifier = identifier;
         this.track = track;
