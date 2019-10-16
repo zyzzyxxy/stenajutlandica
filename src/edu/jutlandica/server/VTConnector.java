@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -126,12 +127,14 @@ public class VTConnector implements APIconnector {
      * @param trip
      * @return
      * @throws JSONException
+     * @throws ParseException 
      */
-    private Trip getTripFromJson(JSONObject trip) throws JSONException {
+    private Trip getTripFromJson(JSONObject trip) throws JSONException, ParseException {
         String t_start = (String) ((JSONObject) trip.get("Origin")).get("name");
         String t_dep_time = (String) ((JSONObject) trip.get("Origin")).get("time");
         String t_end = (String) ((JSONObject) trip.get("Destination")).get("name");
         String t_arr_time = (String) ((JSONObject) trip.get("Destination")).get("time");
+        String t_date = (String) ((JSONObject) trip.get("Origin")).get("date");
         String t_dep_track = (String) ((JSONObject) trip.get("Origin")).get("track");
         String t_arr_track = (String) ((JSONObject) trip.get("Destination")).get("track");
         String t_veh = (String) trip.get("type");
@@ -153,7 +156,10 @@ public class VTConnector implements APIconnector {
         } catch (Exception e) {
             t_direction = "";
         }
-        Trip resultTrip = new Trip(t_start, t_end, t_direction, t_dep_time, t_arr_time, t_veh, t_id, t_dep_track, t_arr_track);
+        SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date d_dep_time = formatter.parse(t_date +" " + t_dep_time );
+        Date d_arr_time = formatter.parse(t_date +" " + t_arr_time );
+        Trip resultTrip = new Trip(t_start, t_end, t_direction, d_dep_time, d_arr_time, t_veh, t_id, t_dep_track, t_arr_track);
         return resultTrip;
     }
 

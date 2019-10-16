@@ -1,6 +1,7 @@
 package edu.jutlandica.client.dataclasses;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -80,12 +81,13 @@ public class Trip implements Serializable {
 		classVariables.put("identifier", identifier);
 
 	}
-     public Trip(String start_station, String end_station, String direction, String dep_time, String arrival_time, String vehicle, String identifier, String dep_track, String arr_track) {
-        this.start_station = start_station;
+     public Trip(String start_station, String end_station, String direction, Date dep_time, Date arrival_time, String vehicle, String identifier, String dep_track, String arr_track) throws ParseException {
+    	 
+    	this.start_station = start_station;
         this.end_station = end_station;
-        this.dep_time = parseDate(dep_time);
+        this.dep_time = dep_time;
         this.direction = direction;
-        this.arrival_time = parseDate(arrival_time);
+        this.arrival_time = arrival_time;
         this.vehicle = vehicle;
         this.identifier = identifier;
         this.dep_track = dep_track;
@@ -93,9 +95,9 @@ public class Trip implements Serializable {
 
         classVariables.put("start_station", start_station);
         classVariables.put("end_station", end_station);
-        classVariables.put("dep_time", dep_time);
+        classVariables.put("dep_time", "unimplemented");
         classVariables.put("direction", direction);
-        classVariables.put("arrival_time", arrival_time);
+        classVariables.put("arrival_time", "unimplemented");
         classVariables.put("vehicle", vehicle);
         classVariables.put("identifier", identifier);
         classVariables.put("dep_track", dep_track);
