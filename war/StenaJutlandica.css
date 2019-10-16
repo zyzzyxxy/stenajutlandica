@@ -2,7 +2,13 @@
 * {
     font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
       sans-serif;
-    background-color: #70a7ff;
+   
+  }
+  
+  body{
+   background: url(bg.jpg);
+   z-index: 1;
+   background-color: none;
   }
 
   .projectname {
@@ -51,7 +57,7 @@
 
   div {
     border-radius: 5px;
-    background-color: #70a7ff;
+    background: url(bg.jpg);
     padding: 2px;
   }
 
@@ -61,6 +67,12 @@
 
 .my-gwt-button {
 	font-size: 150% !important;
+	background-color: #4CAF50;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	
 }
 
   .vehicle{
@@ -69,7 +81,7 @@
     width: 640px;
     padding: 3 px;
     border: 1px solid gray;
-    background-color: gray;
+    
     color: black;
     text-align: left;
   }
