@@ -78,6 +78,10 @@ public class TimePanel {
 		timePanel.add(listBoxPanel);
 	}
 	
+	public boolean isArrivalSearch() {
+		return checkBoxArrival.getValue();
+	}
+	
 	public VerticalPanel getTimePanel() {
 		return timePanel;
 	}

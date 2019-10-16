@@ -12,10 +12,10 @@ public class SearchServiceImpl extends RemoteServiceServlet implements SearchSer
 
 	private static final long serialVersionUID = 1L;
 
-	public List<Journey> getJourneys(String to, String from, Date date) {
+	public List<Journey> getJourneys(String to, String from, Date date, boolean isArrivalSearch) {
 		SearchEngine search = new SearchEngine();
 		try {
-			return search.getJourneys(to, from, date);
+			return search.getJourneys(to, from, date, isArrivalSearch);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

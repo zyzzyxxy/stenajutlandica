@@ -14,7 +14,7 @@ public class SearchEngine {
 	public SearchEngine() {
 	}
 
-	public List<Journey> getJourneys(String to, String from, Date date) throws Exception {
+	public List<Journey> getJourneys(String to, String from, Date date, boolean isArrivalSearch) throws Exception {
 		List<Journey> list = new ArrayList<Journey>();
 		String vtTo = "";
 
@@ -26,6 +26,11 @@ public class SearchEngine {
 		APIconnector vt = new VTConnector();
 		
 		APIconnector fc = new FakeFerryConnector();
+		
+		if (fc instanceof FakeFerryConnector) {
+			FakeFerryConnector ffc = (FakeFerryConnector) fc;
+			ffc.setArrivalSearch(isArrivalSearch);
+		}
 		
 		try {
 			list.addAll(fc.getJourneys(to, from, date));
