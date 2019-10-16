@@ -104,7 +104,7 @@ public class StenaJutlandica implements EntryPoint/* , Observer */ {
 
 		Button btn = new Button("S&#246;k Resa", new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				searchService.getJourneys(to.getSelectedValue(), from.getValue(), timePanel.getDate(), new SearchCallBack());
+				searchService.getJourneys(to.getSelectedValue(), from.getValue(), timePanel.getDate(), timePanel.isArrivalSearch(), new SearchCallBack());
 			}
 		});
 
