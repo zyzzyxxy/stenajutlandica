@@ -25,7 +25,7 @@ public class SearchEngine {
 		
 		APIconnector vt = new VTConnector();
 		
-		APIconnector fc = new SIRIreader();
+		APIconnector fc = new FakeFerryConnector();
 		
 		try {
 			list.addAll(fc.getJourneys(to, from, date));
