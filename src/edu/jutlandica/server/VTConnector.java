@@ -132,7 +132,8 @@ public class VTConnector implements APIconnector {
         String t_dep_time = (String) ((JSONObject) trip.get("Origin")).get("time");
         String t_end = (String) ((JSONObject) trip.get("Destination")).get("name");
         String t_arr_time = (String) ((JSONObject) trip.get("Destination")).get("time");
-        String t_track = (String) ((JSONObject) trip.get("Destination")).get("track");
+        String t_dep_track = (String) ((JSONObject) trip.get("Origin")).get("track");
+        String t_arr_track = (String) ((JSONObject) trip.get("Destination")).get("track");
         String t_veh = (String) trip.get("type");
         String t_id;
         //Try catches for 3 variations sname = string, int or when walk use "name"
@@ -152,7 +153,7 @@ public class VTConnector implements APIconnector {
         } catch (Exception e) {
             t_direction = "";
         }
-        Trip resultTrip = new Trip(t_start, t_end, t_direction, t_dep_time, t_arr_time, t_veh, t_id, t_track);
+        Trip resultTrip = new Trip(t_start, t_end, t_direction, t_dep_time, t_arr_time, t_veh, t_id, t_dep_track, t_arr_track);
         return resultTrip;
     }
 

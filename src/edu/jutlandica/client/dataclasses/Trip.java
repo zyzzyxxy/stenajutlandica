@@ -26,7 +26,9 @@ public class Trip implements Serializable {
 	private Date arrival_time;
 	private String vehicle;
 	private String identifier;
-	private String track;
+	private String arr_track;
+	private String dep_track;
+	
 	Map<String, String> classVariables = new HashMap<>();
 	
 	public Trip() {}
@@ -41,7 +43,8 @@ public class Trip implements Serializable {
 		this.arrival_time = parseDate(arrival_time);
 		this.vehicle = vehicle;
 		this.identifier = identifier;
-        this.track = "";
+		 this.dep_track = "";
+	        this.arr_track = "";
 
 
 		classVariables.put("start_station", start_station);
@@ -51,7 +54,7 @@ public class Trip implements Serializable {
 		classVariables.put("arrival_time", arrival_time);
 		classVariables.put("vehicle", vehicle);
 		classVariables.put("identifier", identifier);
-        classVariables.put("track", track);
+      
 
 	}
 	
@@ -64,7 +67,9 @@ public class Trip implements Serializable {
 		this.arrival_time = arrival_time;
 		this.vehicle = vehicle;
 		this.identifier = identifier;
-        this.track = "";
+        this.dep_track = "";
+        this.arr_track = "";
+      
 
 		classVariables.put("start_station", start_station);
 		classVariables.put("end_station", end_station);
@@ -73,10 +78,9 @@ public class Trip implements Serializable {
 		classVariables.put("arrival_time", arrival_time.toString());
 		classVariables.put("vehicle", vehicle);
 		classVariables.put("identifier", identifier);
-        classVariables.put("track", track);
 
 	}
-     public Trip(String start_station, String end_station, String direction, String dep_time, String arrival_time, String vehicle, String identifier, String track) {
+     public Trip(String start_station, String end_station, String direction, String dep_time, String arrival_time, String vehicle, String identifier, String dep_track, String arr_track) {
         this.start_station = start_station;
         this.end_station = end_station;
         this.dep_time = parseDate(dep_time);
@@ -84,7 +88,8 @@ public class Trip implements Serializable {
         this.arrival_time = parseDate(arrival_time);
         this.vehicle = vehicle;
         this.identifier = identifier;
-        this.track = track;
+        this.dep_track = dep_track;
+        this.arr_track = arr_track;
 
         classVariables.put("start_station", start_station);
         classVariables.put("end_station", end_station);
@@ -93,7 +98,8 @@ public class Trip implements Serializable {
         classVariables.put("arrival_time", arrival_time);
         classVariables.put("vehicle", vehicle);
         classVariables.put("identifier", identifier);
-        classVariables.put("track", track);
+        classVariables.put("dep_track", dep_track);
+        classVariables.put("arr_track", arr_track);
     }
 	
 	public Date parseDate(String time) {
@@ -146,6 +152,13 @@ public class Trip implements Serializable {
 
 	public String getIdentifier() {
 		return identifier;
+	}
+	
+	public String getDepTrack() {
+		return dep_track;
+	}
+	public String getArrTrack() {
+		return arr_track;
 	}
 
 	public Map<String, String> getClassVariables() {

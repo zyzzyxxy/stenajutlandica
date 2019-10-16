@@ -40,11 +40,15 @@ public class JourneyModel /* implements Observable */ {
 
 		sb.append("<h1 class=\"buss\">Avgång: ");
 		sb.append(trip.getStart_station() + ": ");
+		if(!trip.getDepTrack().contentEquals(""))
+			sb.append("l�ge " + trip.getDepTrack() + " ");
 		sb.append(trip.getDep_time());
 		sb.append("</h1>");
 
 		sb.append("<h1 class=\"buss\">Ankomst: ");
-		sb.append(trip.getEnd_station() + ": ");
+		sb.append(trip.getEnd_station() + ":");
+		if(!trip.getArrTrack().contentEquals(""))
+			sb.append("L�ge " + trip.getArrTrack()+" ");
 		sb.append(trip.getArrival_time());
 		sb.append("</h1>");
 		return sb.toString();
