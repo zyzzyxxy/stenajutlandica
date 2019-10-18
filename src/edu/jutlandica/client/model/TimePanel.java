@@ -14,7 +14,7 @@ public class TimePanel {
 	final HorizontalPanel checkBoxPanel;
 	final HorizontalPanel listBoxPanel;
 	
-	final Label labelTime;
+	//final Label labelTime;
 	final RadioButton checkBoxNow;
 	final RadioButton checkBoxArrival;
 	final RadioButton checkBoxDeparture;
@@ -29,7 +29,8 @@ public class TimePanel {
 		timePanel = new VerticalPanel();
 		checkBoxPanel = new HorizontalPanel();
 		listBoxPanel = new HorizontalPanel();
-		labelTime = new Label("Tid:");
+		listBoxPanel.setStyleName("tid");
+		//labelTime = new Label("Tid:");
 		checkBoxNow = new RadioButton("time", "Nu");
 		checkBoxNow.setValue(true);
 		checkBoxNow.addClickHandler(new ClickHandlerCheckBoxRemove());
@@ -67,7 +68,7 @@ public class TimePanel {
 			if (today.getMinutes() - (today.getMinutes() % 5) == i) listBoxMinutes.setSelectedIndex(i/5);
 		}
 		
-		checkBoxPanel.add(labelTime);
+		//checkBoxPanel.add(labelTime);
 		checkBoxPanel.add(checkBoxNow);
 		checkBoxPanel.add(checkBoxArrival);
 		checkBoxPanel.add(checkBoxDeparture);

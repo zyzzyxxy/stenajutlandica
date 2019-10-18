@@ -33,24 +33,150 @@ public class JourneyModel /* implements Observable */ {
 
 	public String getTripTag(Trip trip) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<h1 class=\"buss\">Fordon: ");
-		sb.append(trip.getVehicle() + ": ");
-		sb.append(trip.getIdentifier());
-		sb.append("</h1>");
-
-		sb.append("<h1 class=\"buss\">Avgång: ");
-		sb.append(trip.getStart_station() + ": ");
-		if(!trip.getDepTrack().contentEquals(""))
-			sb.append("l�ge " + trip.getDepTrack() + " ");
-		sb.append(trip.getDep_time());
-		sb.append("</h1>");
-
-		sb.append("<h1 class=\"buss\">Ankomst: ");
-		sb.append(trip.getEnd_station() + ":");
-		if(!trip.getArrTrack().contentEquals(""))
-			sb.append("L�ge " + trip.getArrTrack()+" ");
-		sb.append(trip.getArrival_time());
-		sb.append("</h1>");
+		
+		sb.append("<div class=\"iconVehicle\">"); //ska vara centrerad. 
+		sb.append("<p class=\"identifier\">");
+		//sb.append(trip.getVehicle() + ":");
+		if(trip.getVehicle().contentEquals("WALK")) {
+			
+			sb.append("<img src=\"walking.svg\" height=\"24px\" width=\"24px\" />");
+		}
+		if(trip.getVehicle().contentEquals("BOAT")) {
+			sb.append("<img src=\"ship.svg\" height=\"24px\" width=\"24px\" />");
+		}
+		if(trip.getVehicle().contentEquals("TRAM")) {
+			sb.append("<img src=\"tram.svg\" height=\"24px\" width=\"24px\" />");
+		}
+		if(trip.getVehicle().contentEquals("BUS")) {
+			sb.append("<img src=\"bus.svg\" height=\"24px\" width=\"24px\" />");
+		}
+		if(trip.getVehicle().contentEquals("Ferry")) {
+			sb.append("<img src=\"ship.svg\" height=\"40px\" width=\"40px\" />");
+		}
+		if(trip.getVehicle().contentEquals("WALK/WAIT")) {
+			sb.append("<img src=\"building.svg\" height=\"40px\" width=\"40px\" />");
+		}
+		
+		if(!trip.getVehicle().contentEquals("WALK") && !trip.getVehicle().contentEquals("WALK/WAIT"))
+			sb.append(" " + trip.getIdentifier()); 
+		sb.append("</p>");
+		sb.append("</div>");
+		
+		if(trip.getVehicle().contentEquals("Ferry")) {
+			
+			sb.append("<div class=\"buy\">");
+			sb.append("<a href=\"https://www.stenaline.se/till-danmark/dagstur/goteborg-fredrikshamn\" class=\"button\">Köp biljett!</a>");
+			sb.append("</div>");
+		}
+		
+		if(trip.getVehicle().contentEquals("WALK")) {
+			
+			sb.append("<div class=\"wrapper\">");
+				sb.append("<div class=\"row\">");
+			
+				sb.append("<div class=\"avg\">");
+				sb.append("Från: ");
+				sb.append("</div>");
+			
+				sb.append("<div class=\"hall\">");
+				sb.append(trip.getStart_station());
+				sb.append("</div>");
+			
+				if(!trip.getDepTrack().contentEquals("")) {
+					sb.append("<div class=\"lage\">");
+					sb.append("L&#xE4;ge " + trip.getDepTrack() + " ");
+					sb.append("</div>");
+				}
+				sb.append("<div class=\"tid\">");
+				sb.append(trip.getDep_time());
+				sb.append("</div>");
+			
+				//sb.append("</p>");
+				sb.append("</div>");//row
+			
+				sb.append("<div class=\"row\">");
+			
+				sb.append("<div class=\"avg\">");
+				sb.append("Till: ");
+				sb.append("</div>");
+			
+				sb.append("<div class=\"hall\">");
+				sb.append(trip.getEnd_station());
+				sb.append("</div>");
+				if(!trip.getArrTrack().contentEquals("")) {
+					sb.append("<div class=\"lage\">");
+					sb.append("L&#xE4;ge " + trip.getArrTrack()+" ");
+					sb.append("</div>");
+				}	
+			
+				sb.append("<div class=\"tid\">");
+				sb.append(trip.getArrival_time());
+				sb.append("</div>");
+				//sb.append("</p>");
+			
+				sb.append("</div>");//row
+			
+				sb.append("</div>");//wrapper
+		}
+		else {
+			
+			sb.append("<div class=\"wrapper\">");
+			
+			sb.append("<div class=\"row\">");
+			
+			sb.append("<div class=\"avg\">");
+			sb.append("Avgång: ");
+			sb.append("</div>");
+			
+			sb.append("<div class=\"hall\">");
+			sb.append(trip.getStart_station());
+			sb.append("</div>");
+			
+			if(!trip.getDepTrack().contentEquals("")) {
+				
+				sb.append("<div class=\"lage\">");
+				sb.append("L&#xE4;ge " + trip.getDepTrack() + " ");
+				sb.append("</div>");
+			}
+			
+			sb.append("<div class=\"tid\">");
+			sb.append(trip.getDep_time());
+			sb.append("</div>");
+			
+			//sb.append("</p>");
+			
+			sb.append("</div>");//row
+			
+			sb.append("<div class=\"row\">");
+			
+			sb.append("<div class=\"avg\">");
+			sb.append("Ankomst: ");
+			sb.append("</div>");
+			
+			sb.append("<div class=\"hall\">");
+			sb.append(trip.getEnd_station());
+			sb.append("</div>");
+			if(!trip.getArrTrack().contentEquals("")) {
+				sb.append("<div class=\"lage\">");
+				sb.append("L&#xE4;ge " + trip.getArrTrack()+" ");
+				sb.append("</div>");
+			}
+			
+			sb.append("<div class=\"tid\">");
+			sb.append(trip.getArrival_time());
+			sb.append("</div>");
+			//sb.append("</p>");
+			
+			sb.append("</div>");//row
+			
+			sb.append("</div>");//wrapper
+		}
+		
+		
+		
+		
+		
+		
 		return sb.toString();
 	}
 
@@ -74,13 +200,22 @@ public class JourneyModel /* implements Observable */ {
 		
 		sb.append("<div class=\"header\">");
 		
-		sb.append("<h1 class=\"buss\">");
+		sb.append("<div class=\"left\"> ");
+		sb.append("<p>");
 		sb.append(trips.get(0).getStart_station() + " -> ");
+		sb.append("</p>");
+		sb.append("</div>");
+		
+		sb.append("<div class=\"right\"> ");
+		sb.append("<p>");
 		sb.append(fmt1.format(depDate));
 		sb.append(" - ");
 		sb.append(fmt2.format(arrivalDate));
 		sb.append("   Restid " + (travelTime / (60 * 60 * 1000) % 24) + " h " + (travelTime / (60 * 1000) % 60) + " min");
-		sb.append("</h1>");
+		sb.append("</p>");
+		sb.append("</div>");
+		
+	
 		
 		sb.append("</div>");
 		return new HTML(sb.toString());
@@ -93,7 +228,7 @@ public class JourneyModel /* implements Observable */ {
 		for (Trip trip : trips) {
 			sb.append(getTripTag(trip));
 			if (!trips.get(trips.size() - 1).equals(trip)) {
-				sb.append("<h1 class=\"buss\"> ___next_trip___</h1>");
+				sb.append("<br></br>");
 			}
 		}
 		sb.append("</div>");
