@@ -91,6 +91,7 @@
     text-align: left;
     background-color: rgba(255,255,255, 0.5);
     vertical-align: middle;
+    padding-bottom: 40px;
     
   }
   
@@ -190,6 +191,24 @@
   	padding: 0;
   }
 
+
+.bokaresa{
+	background-color: #44c767;
+	border-radius: 7px;
+	
+	cursor: pointer;
+	color: #ffffff;
+	
+	font-size: 17px;
+	padding: 10px 10px;
+	text-decoration: none;
+	
+	margin:0 auto;
+    display:block;
+    border:none;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
  
   

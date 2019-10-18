@@ -64,9 +64,9 @@ public class JourneyModel /* implements Observable */ {
 		
 		if(trip.getVehicle().contentEquals("Ferry")) {
 			
-			sb.append("<div class=\"buy\">");
-			sb.append("<a href=\"https://www.stenaline.se/till-danmark/dagstur/goteborg-fredrikshamn\" class=\"button\">Köp biljett!</a>");
-			sb.append("</div>");
+			//sb.append("<div class=\"buy\">");
+			sb.append("<button class=\"bokaresa\" onclick=\" window.open('https://www.stenaline.se/till-danmark','_blank')\"> Köp biljett!</button>");
+			//sb.append("</div>");
 		}
 		
 		if(trip.getVehicle().contentEquals("WALK")) {
@@ -112,7 +112,7 @@ public class JourneyModel /* implements Observable */ {
 				sb.append("<div class=\"tid\">");
 				sb.append(trip.getArrival_time());
 				sb.append("</div>");
-				//sb.append("</p>");
+				
 			
 				sb.append("</div>");//row
 			
@@ -143,7 +143,7 @@ public class JourneyModel /* implements Observable */ {
 			sb.append(trip.getDep_time());
 			sb.append("</div>");
 			
-			//sb.append("</p>");
+			
 			
 			sb.append("</div>");//row
 			
@@ -165,17 +165,14 @@ public class JourneyModel /* implements Observable */ {
 			sb.append("<div class=\"tid\">");
 			sb.append(trip.getArrival_time());
 			sb.append("</div>");
-			//sb.append("</p>");
+			
 			
 			sb.append("</div>");//row
 			
 			sb.append("</div>");//wrapper
+			
+			
 		}
-		
-		
-		
-		
-		
 		
 		return sb.toString();
 	}
