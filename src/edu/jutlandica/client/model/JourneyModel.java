@@ -53,6 +53,7 @@ public class JourneyModel /* implements Observable */{
 			sb.append("<img src=\"ship.svg\" height=\"40px\" width=\"40px\" />");
 		
 		if(trip.getVehicle().contentEquals("WALK/WAIT")) {
+			sb.append("<img src=\"walking.svg\" height=\"24px\" width=\"24px\" />");
 			sb.append("<img src=\"building.svg\" height=\"40px\" width=\"40px\" />");
 		 	sb.append("<img src=\"walking.svg\" height=\"24px\" width=\"24px\" />");
 		}

@@ -34,13 +34,14 @@ public class TimePanel {
 		checkBoxNow = new RadioButton("time", "Nu");
 		checkBoxNow.setValue(true);
 		checkBoxNow.addClickHandler(new ClickHandlerCheckBoxRemove());
+		checkBoxNow.setStyleName("radio");
 		
 		checkBoxArrival = new RadioButton("time", "Ankomst");
 		checkBoxArrival.addClickHandler(new ClickHandlerCheckBox());
-		
+		checkBoxArrival.setStyleName("radio");
 		checkBoxDeparture = new RadioButton("time", "Avgång");
 		checkBoxDeparture.addClickHandler(new ClickHandlerCheckBox());
-		
+		checkBoxDeparture.setStyleName("radio");
 		//CREATE DATE LIST
 		listBoxDate = new ListBox();
 		final Date today = new Date();
@@ -53,9 +54,10 @@ public class TimePanel {
 			listBoxDate.addItem(fmt.format(date));
 		}
 		listBoxDate.setSelectedIndex(1);
-		
+		listBoxDate.setStyleName("listbox");
 		//CREATE HOUR LIST
 		listBoxHours = new ListBox();
+		listBoxHours.setStyleName("listbox");
 		for (int i = 0; i < 24; i++) {
 			listBoxHours.addItem((i < 10 ? "0" + i : "" + i));
 			if (today.getHours() == i) listBoxHours.setSelectedIndex(i);
@@ -63,6 +65,8 @@ public class TimePanel {
 		
 		//CREATE MINUTE LIST
 		listBoxMinutes = new ListBox();
+		listBoxMinutes.setStyleName("listbox");
+
 		for (int i = 0; i < 60; i += 5) {
 			listBoxMinutes.addItem((i < 10 ? "0" + i : "" + i));
 			if (today.getMinutes() - (today.getMinutes() % 5) == i) listBoxMinutes.setSelectedIndex(i/5);
@@ -72,6 +76,7 @@ public class TimePanel {
 		checkBoxPanel.add(checkBoxNow);
 		checkBoxPanel.add(checkBoxArrival);
 		checkBoxPanel.add(checkBoxDeparture);
+		checkBoxPanel.setStyleName("boxpanel");//Försöker centrera hela panelen med css för att få radiobuttons att hållas på plats. Gick inte
 		
 		checkBoxPanel.setSpacing(12);
 		listBoxPanel.setSpacing(12);
