@@ -25,7 +25,7 @@ public class TimePanel {
 	
 	final long dayTime = 86400000; //Milliseconds
 	
-	public TimePanel() {
+	public TimePanel(){
 		timePanel = new VerticalPanel();
 		checkBoxPanel = new HorizontalPanel();
 		listBoxPanel = new HorizontalPanel();
@@ -48,7 +48,7 @@ public class TimePanel {
 		DateTimeFormat fmt = DateTimeFormat.getFormat("EEE, MMM d");
 		
 		Date date = new Date(time - 2*dayTime);
-		for (int i = -2; i <= 30; i++) {
+		for (int i = -2; i <= 30; i++){
 			date = new Date(date.getTime() + dayTime);
 			listBoxDate.addItem(fmt.format(date));
 		}

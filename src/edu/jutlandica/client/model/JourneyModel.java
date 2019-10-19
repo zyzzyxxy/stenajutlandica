@@ -15,62 +15,57 @@ import edu.jutlandica.client.controller.StenaFerries;
 import edu.jutlandica.client.dataclasses.Journey;
 import edu.jutlandica.client.dataclasses.Trip;
 
-public class JourneyModel /* implements Observable */ {
+public class JourneyModel /* implements Observable */{
 
 	Journey journey;
 	final VerticalPanel basePanel;
 	private boolean open = false;
 
-	public JourneyModel() {
+	public JourneyModel(){
 		basePanel = new VerticalPanel();
 	}
 
 	// TODO for all trips in journey dispaly relevant information
-	public JourneyModel(Journey journey) {
+	public JourneyModel(Journey journey){
 		basePanel = new VerticalPanel();
 		this.journey = journey;
 	}
 
-	public String getTripTag(Trip trip) {
+	public String getTripTag(Trip trip){
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("<div class=\"iconVehicle\">"); //ska vara centrerad. 
 		sb.append("<p class=\"identifier\">");
 		//sb.append(trip.getVehicle() + ":");
-		if(trip.getVehicle().contentEquals("WALK")) {
-			
+		if(trip.getVehicle().contentEquals("WALK")) 
 			sb.append("<img src=\"walking.svg\" height=\"24px\" width=\"24px\" />");
-		}
-		if(trip.getVehicle().contentEquals("BOAT")) {
+		
+		if(trip.getVehicle().contentEquals("BOAT"))
 			sb.append("<img src=\"ship.svg\" height=\"24px\" width=\"24px\" />");
-		}
-		if(trip.getVehicle().contentEquals("TRAM")) {
+		
+		if(trip.getVehicle().contentEquals("TRAM")) 
 			sb.append("<img src=\"tram.svg\" height=\"24px\" width=\"24px\" />");
-		}
-		if(trip.getVehicle().contentEquals("BUS")) {
+			
+		if(trip.getVehicle().contentEquals("BUS")) 
 			sb.append("<img src=\"bus.svg\" height=\"24px\" width=\"24px\" />");
-		}
-		if(trip.getVehicle().contentEquals("Ferry")) {
+		
+		if(trip.getVehicle().contentEquals("Ferry"))
 			sb.append("<img src=\"ship.svg\" height=\"40px\" width=\"40px\" />");
-		}
-		if(trip.getVehicle().contentEquals("WALK/WAIT")) {
+		
+		if(trip.getVehicle().contentEquals("WALK/WAIT")) 
 			sb.append("<img src=\"building.svg\" height=\"40px\" width=\"40px\" />");
-		}
 		
 		if(!trip.getVehicle().contentEquals("WALK") && !trip.getVehicle().contentEquals("WALK/WAIT"))
 			sb.append(" " + trip.getIdentifier()); 
 		sb.append("</p>");
 		sb.append("</div>");
 		
-		if(trip.getVehicle().contentEquals("Ferry")) {
-			
-			//sb.append("<div class=\"buy\">");
-			sb.append("<button class=\"bokaresa\" onclick=\" window.open('https://www.stenaline.se/till-danmark','_blank')\"> Köp biljett!</button>");
+		if(trip.getVehicle().contentEquals("Ferry"))
+			//sb.append("<div class=\"buy\"> ");
+			sb.append("<button class=\"bokaresa\" onclick=\" window.open('https://www.stenaline.se/till-danmark','_blank')\"> Köp Biljett</button>");
 			//sb.append("</div>");
-		}
 		
-		if(trip.getVehicle().contentEquals("WALK")) {
-			
+		if(trip.getVehicle().contentEquals("WALK")){
 			sb.append("<div class=\"wrapper\">");
 				sb.append("<div class=\"row\">");
 			
@@ -82,7 +77,7 @@ public class JourneyModel /* implements Observable */ {
 				sb.append(trip.getStart_station());
 				sb.append("</div>");
 			
-				if(!trip.getDepTrack().contentEquals("")) {
+				if(!trip.getDepTrack().contentEquals("")){
 					sb.append("<div class=\"lage\">");
 					sb.append("L&#xE4;ge " + trip.getDepTrack() + " ");
 					sb.append("</div>");
@@ -91,7 +86,7 @@ public class JourneyModel /* implements Observable */ {
 				sb.append(trip.getDep_time());
 				sb.append("</div>");
 			
-				//sb.append("</p>");
+				//sb.append("</p> ");
 				sb.append("</div>");//row
 			
 				sb.append("<div class=\"row\">");
@@ -103,7 +98,7 @@ public class JourneyModel /* implements Observable */ {
 				sb.append("<div class=\"hall\">");
 				sb.append(trip.getEnd_station());
 				sb.append("</div>");
-				if(!trip.getArrTrack().contentEquals("")) {
+				if(!trip.getArrTrack().contentEquals("")){
 					sb.append("<div class=\"lage\">");
 					sb.append("L&#xE4;ge " + trip.getArrTrack()+" ");
 					sb.append("</div>");
@@ -119,21 +114,16 @@ public class JourneyModel /* implements Observable */ {
 				sb.append("</div>");//wrapper
 		}
 		else {
-			
 			sb.append("<div class=\"wrapper\">");
-			
 			sb.append("<div class=\"row\">");
-			
 			sb.append("<div class=\"avg\">");
 			sb.append("Avgång: ");
 			sb.append("</div>");
-			
 			sb.append("<div class=\"hall\">");
 			sb.append(trip.getStart_station());
 			sb.append("</div>");
 			
-			if(!trip.getDepTrack().contentEquals("")) {
-				
+			if(!trip.getDepTrack().contentEquals("")){
 				sb.append("<div class=\"lage\">");
 				sb.append("L&#xE4;ge " + trip.getDepTrack() + " ");
 				sb.append("</div>");
@@ -141,22 +131,16 @@ public class JourneyModel /* implements Observable */ {
 			
 			sb.append("<div class=\"tid\">");
 			sb.append(trip.getDep_time());
-			sb.append("</div>");
-			
-			
-			
+			sb.append("</div>");	
 			sb.append("</div>");//row
-			
-			sb.append("<div class=\"row\">");
-			
+			sb.append("<div class=\"row\">");			
 			sb.append("<div class=\"avg\">");
 			sb.append("Ankomst: ");
 			sb.append("</div>");
-			
 			sb.append("<div class=\"hall\">");
 			sb.append(trip.getEnd_station());
 			sb.append("</div>");
-			if(!trip.getArrTrack().contentEquals("")) {
+			if(!trip.getArrTrack().contentEquals("")){
 				sb.append("<div class=\"lage\">");
 				sb.append("L&#xE4;ge " + trip.getArrTrack()+" ");
 				sb.append("</div>");
@@ -165,15 +149,9 @@ public class JourneyModel /* implements Observable */ {
 			sb.append("<div class=\"tid\">");
 			sb.append(trip.getArrival_time());
 			sb.append("</div>");
-			
-			
 			sb.append("</div>");//row
-			
 			sb.append("</div>");//wrapper
-			
-			
 		}
-		
 		return sb.toString();
 	}
 
@@ -212,13 +190,11 @@ public class JourneyModel /* implements Observable */ {
 		sb.append("</p>");
 		sb.append("</div>");
 		
-	
-		
 		sb.append("</div>");
 		return new HTML(sb.toString());
 	}
 
-	public HTML getAllTrips() {
+	public HTML getAllTrips(){
 		StringBuilder sb = new StringBuilder();
 		List<Trip> trips = journey.getTripList();
 		sb.append("<div class=\"vehicle\">");
@@ -233,17 +209,17 @@ public class JourneyModel /* implements Observable */ {
 	}
 	
 	HTML header;
-	public Widget getJourneyPanel() {
+	public Widget getJourneyPanel(){
 		header = getHeader();
 		open = false;
 
-		header.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				if (open) {
+		header.addClickHandler(new ClickHandler(){
+			public void onClick(ClickEvent event){
+				if (open){
 					basePanel.clear();
 					basePanel.add(header);
 					open = false;
-				} else {
+				}else{
 					basePanel.add(getAllTrips());
 					open = true;
 				}
@@ -254,7 +230,7 @@ public class JourneyModel /* implements Observable */ {
 		return basePanel;
 	}
 
-	public String toString() {
+	public String toString(){
 		return journey.toString();
 	}
 }
