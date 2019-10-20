@@ -140,6 +140,12 @@ public class VTConnector implements APIconnector {
         String t_veh = (String) trip.get("type");
         String t_id;
         //Try catches for 3 variations sname = string, int or when walk use "name"
+        if(t_end.substring(t_end.length()-8, t_end.length()).equals("Göteborg")){
+            t_end=t_end.substring(0,t_end.length()-10);
+        }
+        if(t_start.substring(t_start.length()-8, t_start.length()).equals("Göteborg")){
+            t_start=t_start.substring(0,t_start.length()-10);
+        }
         try {
             t_id = (String) trip.get("sname");
         } catch (Exception e) {
