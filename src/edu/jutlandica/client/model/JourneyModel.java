@@ -110,8 +110,7 @@ public class JourneyModel /* implements Observable */{
 				sb.append("<div class=\"tid\">");
 				sb.append(trip.getArrival_time());
 				sb.append("</div>");
-				
-			
+      
 				sb.append("</div>");//row
 			
 				sb.append("</div>");//wrapper
@@ -154,8 +153,8 @@ public class JourneyModel /* implements Observable */{
 			sb.append("</div>");
 			sb.append("</div>");//row
 			sb.append("</div>");//wrapper
-		}
-		return sb.toString();
+		}		
+    return sb.toString();
 	}
 
 	public HTML getFirstTrip() {
@@ -174,7 +173,7 @@ public class JourneyModel /* implements Observable */{
 		Date arrivalDate = trips.get(trips.size()-1).getArrivalDate();
 		DateTimeFormat fmt1 = DateTimeFormat.getFormat("yyyy-MM-dd HH:mm");
 		DateTimeFormat fmt2 = DateTimeFormat.getFormat("HH:mm");
-		long travelTime = arrivalDate.getTime() - depDate.getTime();
+		String travelTime = getTimeDifference(arrivalDate, depDate);
 		
 		sb.append("<div class=\"header\">");
 		
@@ -189,20 +188,23 @@ public class JourneyModel /* implements Observable */{
 		sb.append(fmt1.format(depDate));
 		sb.append(" - ");
 		sb.append(fmt2.format(arrivalDate));
+
 		sb.append("   Restid " + (travelTime / (60 * 60 * 1000) % 24) + " h " + (travelTime / (60 * 1000) % 60) + " min");
 		sb.append("</p>");
 		sb.append("</div>");
-		
+    /*  sb.append("   Restid " + travelTime + " min");
+		    sb.append("</h1>");*/
+
 		sb.append("</div>");
 		return new HTML(sb.toString());
 	}
 
 	public HTML getAllTrips(){
-		StringBuilder sb = new StringBuilder();
+    StringBuilder sb = new StringBuilder();
 		List<Trip> trips = journey.getTripList();
 		sb.append("<div class=\"vehicle\">");
 		for (Trip trip : trips) {
-			sb.append(getTripTag(trip));
+		  sb.append(getTripTag(trip));
 			if (!trips.get(trips.size() - 1).equals(trip)) {
 				sb.append("<br></br>");
 			}
@@ -210,7 +212,13 @@ public class JourneyModel /* implements Observable */{
 		sb.append("</div>");
 		return new HTML(sb.toString());
 	}
-	
+  
+  /*public HTML getAllTrips() {
+    public String getTimeDifference(Date arrivalDate, Date depDate) {
+		long travelTime = arrivalDate.getTime() - depDate.getTime();
+		while (travelTime < 0) travelTime += 24 * 60 * 60 * 1000;
+		return (travelTime / (60 * 60 * 1000) % 24) + " h " + (travelTime / (60 * 1000) % 60);
+	}*/
 	HTML header;
 	public Widget getJourneyPanel(){
 		header = getHeader();

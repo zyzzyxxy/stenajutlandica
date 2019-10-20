@@ -39,7 +39,7 @@ public class FakeFerryConnector implements APIconnector {
 		String dateStringTomorrow = SIRI_FORMAT_DATE.format(nextDate);
 		
 		while (list.size() < 5) {
-			List<Trip> trips = getTripsWeekdays(dateString, dateStringTomorrow);
+			List<Trip> trips = getJourneysAtDate(today, dateString, dateStringTomorrow);
 			
 			for (Trip t : trips) {
 				if (t.getDepDate().before(date) && isArrivalSearch() || t.getDepDate().after(date) && !isArrivalSearch())
@@ -58,6 +58,27 @@ public class FakeFerryConnector implements APIconnector {
 			dateString = SIRI_FORMAT_DATE.format(today);
 			dateStringTomorrow = SIRI_FORMAT_DATE.format(nextDate);
 		}
+		return list;
+	}
+	
+	public List<Trip> getJourneysAtDate(Date today, String dateString, String dateStringTomorrow) throws ParseException {
+		List<Trip> list = new ArrayList<>();
+		int weekday = today.getDay(); // (0 = Sunday, 1 = Monday, 2 = Tuesday, 3 = Wednesday, 4 =Thursday, 5 = Friday, 6 = Saturday) 
+		
+		switch (weekday) {
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+			list.addAll(getTripsWeekdays(dateString, dateStringTomorrow));
+			break;
+		case 5:
+		case 6:
+		case 0:
+			list.addAll(getTripsWeekends(dateString, dateStringTomorrow));
+			break;
+		}
+		
 		return list;
 	}
 
@@ -89,16 +110,20 @@ public class FakeFerryConnector implements APIconnector {
 
 		return trips;
 	}
+	
+	
 
 	public List<Trip> getTripsWeekends(String dateString, String dateStringTomorrow) throws ParseException {
 		List<Trip> trips = new ArrayList<Trip>();
 
 		trips.add(new Trip("Göteborg", "Fredrikshamn", "", SIRI_FORMAT.parse(dateString + "T00:30:00"),
 				SIRI_FORMAT.parse(dateString + "T04:10:00"), "Ferry", "Jutlandica"));
-		trips.add(new Trip("Göteborg", "Fredrikshamn", "", SIRI_FORMAT.parse(dateString + "T09:10:00"),
-				SIRI_FORMAT.parse(dateString + "T12:30:00"), "Ferry", "Danica"));
-		trips.add(new Trip("Göteborg", "Fredrikshamn", "", SIRI_FORMAT.parse(dateString + "T22:10:00"),
-				SIRI_FORMAT.parse(dateStringTomorrow + "T01:40:00"), "Ferry", "Vinga"));
+		trips.add(new Trip("Göteborg", "Fredrikshamn", "", SIRI_FORMAT.parse(dateString + "T08:00:00"),
+				SIRI_FORMAT.parse(dateString + "T11:20:00"), "Ferry", "Danica"));
+		trips.add(new Trip("Göteborg", "Fredrikshamn", "", SIRI_FORMAT.parse(dateString + "T18:00:00"),
+				SIRI_FORMAT.parse(dateStringTomorrow + "T21:10:00"), "Ferry", "Vinga"));
+		trips.add(new Trip("Göteborg", "Kiel", "", SIRI_FORMAT.parse(dateString + "T17:45:00"),
+				SIRI_FORMAT.parse(dateStringTomorrow + "T09:15:00"), "Ferry", "Scandinavia"));
 
 		return trips;
 	}
