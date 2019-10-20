@@ -188,15 +188,20 @@ public class JourneyModel /* implements Observable */{
 		sb.append(fmt1.format(depDate));
 		sb.append(" - ");
 		sb.append(fmt2.format(arrivalDate));
-
-		sb.append("   Restid " + (travelTime / (60 * 60 * 1000) % 24) + " h " + (travelTime / (60 * 1000) % 60) + " min");
+		sb.append("   Restid " + travelTime + " min");
+		sb.append("</h1>");
+		
+		/*sb.append("   Restid " + (travelTime / (60 * 60 * 1000) % 24) + " h " + (travelTime / (60 * 1000) % 60) + " min");
 		sb.append("</p>");
-		sb.append("</div>");
-    /*  sb.append("   Restid " + travelTime + " min");
-		    sb.append("</h1>");*/
-
+		sb.append("</div>");*/
+		
 		sb.append("</div>");
 		return new HTML(sb.toString());
+	}
+	public String getTimeDifference(Date arrivalDate, Date depDate) {
+		long travelTime = arrivalDate.getTime() - depDate.getTime();
+		while(travelTime <0) travelTime += 24 * 60 * 60 * 1000;
+		return(travelTime / (60*60*1000) % 24) + " h " + (travelTime / (60*1000) % 60);
 	}
 
 	public HTML getAllTrips(){
