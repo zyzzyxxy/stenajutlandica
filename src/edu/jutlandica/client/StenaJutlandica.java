@@ -85,7 +85,7 @@ public class StenaJutlandica implements EntryPoint/* , Observer */ {
 		final HorizontalPanel formPanel = new HorizontalPanel();
 		final VerticalPanel vPanel = new VerticalPanel();
 		final TextBox from = new TextBox();
-		from.setValue("centralstationen");
+		from.setValue("Lindholmen");
 		from.setEnabled(true);
 		final ListBox to = new ListBox();
 		to.addItem(KIEL);
@@ -97,18 +97,18 @@ public class StenaJutlandica implements EntryPoint/* , Observer */ {
 		vPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		vPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 
-		formPanel.setSpacing(12);
+		formPanel.setSpacing(8);
 		formPanel.add(from);
 		formPanel.add(to);
 		vPanel.add(formPanel);
 
 		Button btn = new Button("S&#246;k Resa", new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				searchService.getJourneys(to.getSelectedValue(), from.getValue(), timePanel.getDate(), new SearchCallBack());
+				searchService.getJourneys(to.getSelectedValue(), from.getValue(), timePanel.getDate(), timePanel.isArrivalSearch(), new SearchCallBack());
 			}
 		});
 
-		btn.setWidth("300px");
+		btn.setWidth("150px");
 		btn.setHeight("48px");
 		btn.addStyleName("my-gwt-button");
 		vPanel.add(timePanel.getTimePanel());

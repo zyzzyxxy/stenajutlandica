@@ -1,6 +1,7 @@
 package edu.jutlandica.client.dataclasses;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +27,9 @@ public class Trip implements Serializable {
 	private Date arrival_time;
 	private String vehicle;
 	private String identifier;
+	private String arr_track;
+	private String dep_track;
+	
 	Map<String, String> classVariables = new HashMap<>();
 	
 	public Trip() {}
@@ -40,6 +44,9 @@ public class Trip implements Serializable {
 		this.arrival_time = parseDate(arrival_time);
 		this.vehicle = vehicle;
 		this.identifier = identifier;
+		 this.dep_track = "";
+	        this.arr_track = "";
+
 
 		classVariables.put("start_station", start_station);
 		classVariables.put("end_station", end_station);
@@ -48,6 +55,8 @@ public class Trip implements Serializable {
 		classVariables.put("arrival_time", arrival_time);
 		classVariables.put("vehicle", vehicle);
 		classVariables.put("identifier", identifier);
+      
+
 	}
 	
 	public Trip(String start_station, String end_station, String direction, Date dep_time, Date arrival_time,
@@ -59,6 +68,9 @@ public class Trip implements Serializable {
 		this.arrival_time = arrival_time;
 		this.vehicle = vehicle;
 		this.identifier = identifier;
+        this.dep_track = "";
+        this.arr_track = "";
+      
 
 		classVariables.put("start_station", start_station);
 		classVariables.put("end_station", end_station);
@@ -67,7 +79,30 @@ public class Trip implements Serializable {
 		classVariables.put("arrival_time", arrival_time.toString());
 		classVariables.put("vehicle", vehicle);
 		classVariables.put("identifier", identifier);
+
 	}
+     public Trip(String start_station, String end_station, String direction, Date dep_time, Date arrival_time, String vehicle, String identifier, String dep_track, String arr_track) throws ParseException {
+    	 
+    	this.start_station = start_station;
+        this.end_station = end_station;
+        this.dep_time = dep_time;
+        this.direction = direction;
+        this.arrival_time = arrival_time;
+        this.vehicle = vehicle;
+        this.identifier = identifier;
+        this.dep_track = dep_track;
+        this.arr_track = arr_track;
+
+        classVariables.put("start_station", start_station);
+        classVariables.put("end_station", end_station);
+        classVariables.put("dep_time", "unimplemented");
+        classVariables.put("direction", direction);
+        classVariables.put("arrival_time", "unimplemented");
+        classVariables.put("vehicle", vehicle);
+        classVariables.put("identifier", identifier);
+        classVariables.put("dep_track", dep_track);
+        classVariables.put("arr_track", arr_track);
+    }
 	
 	public Date parseDate(String time) {
 		Date date = new Date();
@@ -119,6 +154,13 @@ public class Trip implements Serializable {
 
 	public String getIdentifier() {
 		return identifier;
+	}
+	
+	public String getDepTrack() {
+		return dep_track;
+	}
+	public String getArrTrack() {
+		return arr_track;
 	}
 
 	public Map<String, String> getClassVariables() {

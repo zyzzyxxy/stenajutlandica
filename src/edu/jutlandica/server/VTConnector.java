@@ -8,6 +8,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -17,7 +18,8 @@ import org.json.*;
 import edu.jutlandica.client.dataclasses.Journey;
 import edu.jutlandica.client.dataclasses.Trip;
 
-public class VTConnector implements APIconnector{
+
+public class VTConnector implements APIconnector {
     //KEY and SECRET from personal account... Can be changed to another users account
     final String KEY = "LKhZ7iZlmxrdSyI4OAExXOfWlkQa";
     final String SECRET = "KHtlJozIqQ0zdiKyiy0sWuzQMu8a";
@@ -27,6 +29,7 @@ public class VTConnector implements APIconnector{
 
     /**
      * This method generates an auth_token... Needed for communication with vt api.
+     *
      * @return
      * @throws Exception
      */
@@ -76,6 +79,7 @@ public class VTConnector implements APIconnector{
 
     /**
      * Help class for getTrip
+     *
      * @param auth_token
      * @param parameters
      * @param vt_function
@@ -85,7 +89,7 @@ public class VTConnector implements APIconnector{
     private JSONObject getInfoFromVT(String auth_token, Map<String, String> parameters, String vt_function) throws Exception {
 
         String outData = "?" + ParameterStringBuilder.getParamsString(parameters);
-        String url = VT_BASEADRESS + vt_function + outData +"&json";
+        String url = VT_BASEADRESS + vt_function + outData + "&json";
 
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -119,42 +123,55 @@ public class VTConnector implements APIconnector{
 
     /**
      * HelpClass for getTrip
+     *
      * @param trip
      * @return
      * @throws JSONException
+     * @throws ParseException 
      */
-    private Trip getTripFromJson(JSONObject trip) throws JSONException {
+    private Trip getTripFromJson(JSONObject trip) throws JSONException, ParseException {
         String t_start = (String) ((JSONObject) trip.get("Origin")).get("name");
         String t_dep_time = (String) ((JSONObject) trip.get("Origin")).get("time");
         String t_end = (String) ((JSONObject) trip.get("Destination")).get("name");
         String t_arr_time = (String) ((JSONObject) trip.get("Destination")).get("time");
+        String t_date = (String) ((JSONObject) trip.get("Origin")).get("date");
+        String t_dep_track = (String) ((JSONObject) trip.get("Origin")).get("track");
+        String t_arr_track = (String) ((JSONObject) trip.get("Destination")).get("track");
         String t_veh = (String) trip.get("type");
         String t_id;
         //Try catches for 3 variations sname = string, int or when walk use "name"
+        if(t_end.substring(t_end.length()-8, t_end.length()).equals("Göteborg")){
+            t_end=t_end.substring(0,t_end.length()-10);
+        }
+        if(t_start.substring(t_start.length()-8, t_start.length()).equals("Göteborg")){
+            t_start=t_start.substring(0,t_start.length()-10);
+        }
         try {
             t_id = (String) trip.get("sname");
         } catch (Exception e) {
-            try{
+            try {
                 t_id = Integer.toString((int) trip.get("sname"));
-            }
-            catch (Exception f){
+            } catch (Exception f) {
                 t_id = (String) trip.get("name");
             }
         }
         //Try catch for special case of walking has no direction
-        String t_direction ="";
+        String t_direction = "";
         try {
             t_direction = (String) trip.get("direction");
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             t_direction = "";
         }
-        Trip resultTrip = new Trip(t_start, t_end, t_direction, t_dep_time, t_arr_time, t_veh, t_id);
+        SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date d_dep_time = formatter.parse(t_date +" " + t_dep_time );
+        Date d_arr_time = formatter.parse(t_date +" " + t_arr_time );
+        Trip resultTrip = new Trip(t_start, t_end, t_direction, d_dep_time, d_arr_time, t_veh, t_id, t_dep_track, t_arr_track);
         return resultTrip;
     }
 
     /**
      * This method return a list of journeys form the given arguments
+     *
      * @param auth_token
      * @param start_station
      * @param end_station
@@ -163,7 +180,7 @@ public class VTConnector implements APIconnector{
      * @return
      */
 //TODO i have taken care of special cases inluding trams, busses and walking... Seems to work but needs som "Stress" testing
-       public List<Journey> getTrip(String auth_token, String start_station, String end_station, String time, String date, int arrivalTime) {
+    public List<Journey> getTrip(String auth_token, String start_station, String end_station, String time, String date, int arrivalTime) {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("originId", start_station);
         parameters.put("date", date);
@@ -185,7 +202,7 @@ public class VTConnector implements APIconnector{
 
             System.out.println("Length of triplist: " + triplist.length());
             System.out.println("Length of triparray: " + tripArray.length());
-            for(int i = 0; i<tripArray.length(); i++) {
+            for (int i = 0; i < tripArray.length(); i++) {
                 Journey resJ = new Journey();
                 JSONObject trip = (JSONObject) tripArray.get(i);
                 System.out.println("class 1" + trip.get("Leg").getClass());
@@ -193,23 +210,21 @@ public class VTConnector implements APIconnector{
                 //System.out.println("Objclass: "+obj.getClass());
                 //System.out.println("ARRÄJJENLENGTH: ");
                 // System.out.println(obj.toString());
-                if(obj.getClass().equals(JSONArray.class)) {
-                    JSONArray tempArr =  (JSONArray)obj;
+                if (obj.getClass().equals(JSONArray.class)) {
+                    JSONArray tempArr = (JSONArray) obj;
                     System.out.println("Obj is array of length: " + tempArr.length());
                     System.out.println(tempArr);
-                    for (int j = 0; j< tempArr.length();j++){
-                        JSONObject jsonObject = (JSONObject)tempArr.get(j);
+                    for (int j = 0; j < tempArr.length(); j++) {
+                        JSONObject jsonObject = (JSONObject) tempArr.get(j);
                         System.out.println("Original from arr: " + jsonObject.toString());
                         Trip resultTrip = getTripFromJson(jsonObject);
                         resJ.addTrip(resultTrip);
                     }
 
-                }
-                else if( obj.getClass().equals(JSONObject.class)){
-                    Trip resultTrip = getTripFromJson((JSONObject)obj);
+                } else if (obj.getClass().equals(JSONObject.class)) {
+                    Trip resultTrip = getTripFromJson((JSONObject) obj);
                     resJ.addTrip(resultTrip);
-                }
-                else{
+                } else {
                     System.out.println("Something is wrong... Terrible wrong");
                 }
                 resultJourneyList.add(resJ);
@@ -230,9 +245,9 @@ public class VTConnector implements APIconnector{
         SimpleDateFormat frmTime = new SimpleDateFormat("HH:mm");
         String sDate = frmDate.format(date);
         String sTime = frmTime.format(date);
-
         String authKey = authenticate();
-               String from_id = getIdFromName(from, authKey);
+
+        String from_id = getIdFromName(from, authKey);
         String to_id = getIdFromName(to, authKey);
 
         List<Journey> resultList = getTrip(authKey, from_id, to_id, sTime, sDate, 1);
@@ -246,6 +261,7 @@ public class VTConnector implements APIconnector{
         parameters.put("input", arg);
 
         JSONObject result = getInfoFromVT(authToken, parameters, func);
+        System.out.println(result.toString());
         JSONObject level1 = (JSONObject) result.get("LocationList");
         JSONArray level2 = (JSONArray)level1.get("StopLocation");
         JSONObject level3 = (JSONObject) level2.get(0);

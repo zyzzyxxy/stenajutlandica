@@ -14,7 +14,7 @@ public class TimePanel {
 	final HorizontalPanel checkBoxPanel;
 	final HorizontalPanel listBoxPanel;
 	
-	final Label labelTime;
+	//final Label labelTime;
 	final RadioButton checkBoxNow;
 	final RadioButton checkBoxArrival;
 	final RadioButton checkBoxDeparture;
@@ -25,21 +25,23 @@ public class TimePanel {
 	
 	final long dayTime = 86400000; //Milliseconds
 	
-	public TimePanel() {
+	public TimePanel(){
 		timePanel = new VerticalPanel();
 		checkBoxPanel = new HorizontalPanel();
 		listBoxPanel = new HorizontalPanel();
-		labelTime = new Label("Tid:");
+		listBoxPanel.setStyleName("tid");
+		//labelTime = new Label("Tid:");
 		checkBoxNow = new RadioButton("time", "Nu");
 		checkBoxNow.setValue(true);
 		checkBoxNow.addClickHandler(new ClickHandlerCheckBoxRemove());
+		checkBoxNow.setStyleName("radio");
 		
 		checkBoxArrival = new RadioButton("time", "Ankomst");
 		checkBoxArrival.addClickHandler(new ClickHandlerCheckBox());
-		
+		checkBoxArrival.setStyleName("radio");
 		checkBoxDeparture = new RadioButton("time", "Avgång");
 		checkBoxDeparture.addClickHandler(new ClickHandlerCheckBox());
-		
+		checkBoxDeparture.setStyleName("radio");
 		//CREATE DATE LIST
 		listBoxDate = new ListBox();
 		final Date today = new Date();
@@ -47,14 +49,15 @@ public class TimePanel {
 		DateTimeFormat fmt = DateTimeFormat.getFormat("EEE, MMM d");
 		
 		Date date = new Date(time - 2*dayTime);
-		for (int i = -2; i <= 30; i++) {
+		for (int i = -2; i <= 30; i++){
 			date = new Date(date.getTime() + dayTime);
 			listBoxDate.addItem(fmt.format(date));
 		}
 		listBoxDate.setSelectedIndex(1);
-		
+		listBoxDate.setStyleName("listbox");
 		//CREATE HOUR LIST
 		listBoxHours = new ListBox();
+		listBoxHours.setStyleName("listbox");
 		for (int i = 0; i < 24; i++) {
 			listBoxHours.addItem((i < 10 ? "0" + i : "" + i));
 			if (today.getHours() == i) listBoxHours.setSelectedIndex(i);
@@ -62,20 +65,27 @@ public class TimePanel {
 		
 		//CREATE MINUTE LIST
 		listBoxMinutes = new ListBox();
+		listBoxMinutes.setStyleName("listbox");
+
 		for (int i = 0; i < 60; i += 5) {
 			listBoxMinutes.addItem((i < 10 ? "0" + i : "" + i));
 			if (today.getMinutes() - (today.getMinutes() % 5) == i) listBoxMinutes.setSelectedIndex(i/5);
 		}
 		
-		checkBoxPanel.add(labelTime);
+		//checkBoxPanel.add(labelTime);
 		checkBoxPanel.add(checkBoxNow);
 		checkBoxPanel.add(checkBoxArrival);
 		checkBoxPanel.add(checkBoxDeparture);
+		checkBoxPanel.setStyleName("boxpanel");//Försöker centrera hela panelen med css för att få radiobuttons att hållas på plats. Gick inte
 		
 		checkBoxPanel.setSpacing(12);
 		listBoxPanel.setSpacing(12);
 		timePanel.add(checkBoxPanel);
 		timePanel.add(listBoxPanel);
+	}
+	
+	public boolean isArrivalSearch() {
+		return checkBoxArrival.getValue();
 	}
 	
 	public VerticalPanel getTimePanel() {

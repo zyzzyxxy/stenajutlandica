@@ -9,5 +9,5 @@ import edu.jutlandica.client.dataclasses.Journey;
 
 public interface SearchServiceAsync {
    //void getMessage(String input, AsyncCallback<Message> callback);
-   void getJourneys(String to, String from, Date date, AsyncCallback<List<Journey>> callback); 
+   void getJourneys(String to, String from, Date date, boolean isArrivalSearch, AsyncCallback<List<Journey>> callback); 
 }
