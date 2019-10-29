@@ -1,0 +1,7 @@
+1. Installera Tomcat
+2. Installera Eclipse
+3. Installera GWT-miljön i eclipse
+4. Använd java version 8
+5. Ladda in projekt från git in i Eclipse
+6. Lägg till nödvändigt JSON bibliotek
+7. Exekvera applikationen i Eclipse som GWT JEFF development mode
