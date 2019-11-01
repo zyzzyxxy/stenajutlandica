@@ -10,15 +10,8 @@ Google drive - https://drive.google.com/drive/folders/1eQzc_I-02bIibcBYWU3iaN5ky
 Slack team-invite link https://join.slack.com/t/stenajutlandica/shared_invite/enQtNzcyMDgwNzg5NzgwLTI0YTBiOWUxYzAwZWRlZDlmYTRmZTQ2YWUwM2ZhNTRmNDA0ZTU4NzM5ZTMxYzU3MDkyZmZiY2JmODBkOWEzZTM
 
 
-    #Siri-länkar från gemensam git
-      NeTEx & SIRI Example
-      Examples from Norway:
-      https://github.com/entur/profile-norway-examples
-      Official schemas with examples:
-      https://github.com/NeTEx-CEN/NeTEx
-
-      Handbook for the Nordic NeTEx profile:
-      https://enturas.atlassian.net/wiki/spaces/PUBLIC/pages/728891481/Nordic+NeTEx+Profile
-      Handbook for the Nordic SIRI profile:
-      https://enturas.atlassian.net/wiki/spaces/PUBLIC/pages/637370420/Norwegian+SIRI+profile
-      https://github.com/larstomas/NeTEx-SIRI-data
+    Spikekotte = carl
+    Sajttam = Mattias
+    Rylle = Eric
+    Zyzzyxxy = Johan
+    JanneD = Daniel
