@@ -1,0 +1,15 @@
+Vecka 5
+
+Känner att jag vill bli säkrare på hur den kod jag inte varit med o skrivit för att känna mig säkrare om hur alla delar i programmet
+kommunicerar med varandra. Har under denna vecka fått lite bättre koll men vill få ännu bättre. 
+
+
+Under denna vecka har vi försökt fixa klart alla liggandes task i vår backlog, något vi har lyckat väldigt bra med enligt mig.
+Jag och mattias satt och implementerade searchfrom, dvs att kunna specifiera sök till nu eller en viss tid för ankomst eller avgång.
+
+
+jag har varit med på alla möten och varit väl deltagande i gruppens arbete och diskutioner om hur vi ska fortsätta med utvecklandet. 
+
+
+Nästa vecka kommer jag inte lägga jätte mycket focus på detta projekt då jag har massa annat som kommer ta upp tiden, något jag 
+meddelat till gruppen.

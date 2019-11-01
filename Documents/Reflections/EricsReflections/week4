@@ -1,0 +1,13 @@
+vecka 4:
+
+Denna vecka har scrum fungerat betydligt bättre, vi har nu börjat hamna i fas med vårt tasks. Acceptence crierias som vi skrev förra veckan
+har underlättat utveckligen enligt mig då de har gjort det tydligare att veta vad som en metod eller class ska kunna göra. Jag har också
+under denna vecka löst de stora problemen med xml och nu när vi kommit överens om att server-clienten ska kommunicera med journeys känns det
+som utvecklingen börjar gå framåt.
+
+Under veckan har jag ängat mig åt att lösa xml delen då vi beslutade att den skulle skrivas om och köras på servern något som verkligen har 
+underlättat utveckling under veckans gång. Då det nu märks tydligt att xml i gwt-client inte var det bästa sättet. Utan att det är 
+client-server kommunication som man ska använda för sådana uppgiter.
+
+Under nästa vecka vill jag få mer koll på koden jag inte varit med o skrivit, för att ha det lättare att implementera det jag skrivit och
+det jag kommer skriva.
