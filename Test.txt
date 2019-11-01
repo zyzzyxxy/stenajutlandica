@@ -1,7 +1,12 @@
 1. Installera Tomcat
+	enligt... https://tomcat.apache.org/tomcat-8.5-doc/setup.html
 2. Installera Eclipse
+	enligt...  https://www.eclipse.org/downloads/packages/installer
 3. Installera GWT-miljön i eclipse
+	enligt... https://gwt-plugins.github.io/documentation/gwt-eclipse-plugin/Download.html
 4. Använd java version 8
 5. Ladda in projekt från git in i Eclipse
-6. Lägg till nödvändigt JSON bibliotek, org.JSON,https://search.maven.org/classic/#search%7Cgav%7C1%7Cg%3A%22org.json%22%20AND%20a%3A%22json%22
+6. Lägg till nödvändigt JSON bibliotek,
+	senaste versionen hittas på... org.JSON,https://search.maven.org/classic/#search%7Cgav%7C1%7Cg%3A%22org.json%22%20AND%20a%3A%22json%22
+8. Under Properties -> GWT -> General Settings, se till att rutan "Use GWT" är ibockad. 
 7. Exekvera applikationen i Eclipse som GWT JEFF development mode
