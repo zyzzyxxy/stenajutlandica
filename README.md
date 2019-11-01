@@ -10,8 +10,8 @@ Google drive - https://drive.google.com/drive/folders/1eQzc_I-02bIibcBYWU3iaN5ky
 Slack team-invite link https://join.slack.com/t/stenajutlandica/shared_invite/enQtNzcyMDgwNzg5NzgwLTI0YTBiOWUxYzAwZWRlZDlmYTRmZTQ2YWUwM2ZhNTRmNDA0ZTU4NzM5ZTMxYzU3MDkyZmZiY2JmODBkOWEzZTM
 
 
-    Spikekotte = carl
-    Sajttam = Mattias
-    Rylle = Eric
-    Zyzzyxxy = Johan
-    JanneD = Daniel
+    Spikekotte  = carl
+    Sajttam     = Mattias
+    Rylle       = Eric
+    Zyzzyxxy    = Johan
+    JanneD      = Daniel
